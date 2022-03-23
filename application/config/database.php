@@ -83,7 +83,7 @@ $db['default'] = array(
 	'username' => 'u1723851_root',
 	'database' => 'u1723851_oviie',
 	'hostname' => 'localhost',
-	'password'	=> 'KopiKapalApi05^',
+	'password'	=> 'KopiKapalApi05',
 	
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
