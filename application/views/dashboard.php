@@ -260,7 +260,7 @@
     </nav>
     <nav id="sidebar" class="sidebar" role="navigation">
         <!-- need this .js class to initiate slimscroll -->
-        <div class="js-sidebar-content">
+        <div class="js-sidebar-content" style="overflow: hidden; width: auto; height: 100vh;">
             <header class="logo d-md-block">
                 <a href="<?= base_url() ?>dashboard">
                     <img src="<?= base_url() ?>assets/img/logo.svg" alt="...">
@@ -390,7 +390,7 @@
 
     <!-- common app js -->
     <script src="<?= base_url() ?>assets/js/settings.js"></script>
-    <!-- <script src="<?= base_url() ?>assets/js/app.js"></script> -->
+    <script src="<?= base_url() ?>assets/js/app.js"></script>
     <script src="<?= base_url() ?>assets/node_modules/apexcharts/dist/apexcharts.js"></script>
 
     <!-- Page scripts -->
