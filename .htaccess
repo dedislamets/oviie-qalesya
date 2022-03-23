@@ -1,0 +1,19 @@
+RewriteEngine On
+#RewriteCond %{HTTP_HOST} !^www\.(.*)
+#RewriteRule (.*) http://www.%{HTTP_HOST}/$1 [R=301,L]
+RewriteCond $1 !^(index\.php|robots\.txt)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?/$1 [L]
+Options -Indexes
+IndexIgnore *.gitignore *.editorconfig 
+
+<ifmodule mod_headers.c>
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
+    Header set X-Content-Type-Options nosniff
+    Header always append X-Frame-Options SAMEORIGIN
+    #Header add Content-Security-Policy "default-src 'self';"
+    Header set Referrer-Policy "same-origin"
+    Header set X-XSS-Protection "1; mode=block"
+    Header always set Permissions-Policy "geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()"
+</ifmodule>
