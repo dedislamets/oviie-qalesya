@@ -3,13 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Model
 {
-    //fungsi cek session
     function logged_id()
     {
         return $this->session->userdata('user_id');
     }
 
-    //fungsi check login
     function check_login($table, $field1, $field2)
     {
         $this->db->select('*');
@@ -29,27 +27,69 @@ class Admin extends CI_Model
             return $query->result();
         }
     }
-
-    function masterSetup()
-    {
-        $this->db->select('*');
-        $this->db->from('Administrator');
-        $query = $this->db->get();
-        return $query->result();
-    }
-    function api_get_function($name,$id, $order ='')
-    {        
-        $this->db->from($name.' ('.$id.')');
-        if($order<>"")   
-            $this->db->order($order, 'DESC');
-
-        $query = $this->db->get();
-        if ($query->num_rows() == 0) {
-            return FALSE;
-        } else {
-            return $query->result();
+    function api_getmaster($tabel, $where='', $variable='*', $orderby=''){
+        $sql = "SELECT ". $variable ." FROM ". $tabel;
+        if($where !=''){
+            $sql.= " WHERE ". $where ;
         }
+
+        if($orderby !=''){
+            $sql.= " ORDER BY ". $orderby ;
+        }
+
+        $query = $this->db->query($sql);
+        return $query->result();    
     }
+
+    function getmaster($tabel,$where='',$order=''){
+
+        $this->db->from($tabel);
+        if($where !=""){
+            $this->db->where($where);
+        }
+        if($order !=""){
+            $this->db->order_by($order);
+        }
+        $query = $this->db->get();
+        // echo $this->db->last_query();exit();
+        return $query->result();   
+    }
+    function getmaster_num_rows($tabel,$where='',$order=''){
+
+        $this->db->from($tabel);
+        if($where !=""){
+            $this->db->where($where);
+        }
+        if($order !=""){
+            $this->db->order_by($order);
+        }
+        $query = $this->db->get();
+        return $query->num_rows();   
+    }
+    function getmaster_dm($tabel,$where='',$order=''){
+        $this->db->from($tabel);
+        if($where !=""){
+            $this->db->where($where);
+        }
+        if($order !=""){
+            $this->db->order_by($order);
+        }
+        $query = $this->db->get();
+        return $query->result();    
+    }
+
+    function get_pm($tabel,$where='',$order=''){
+        $this->db->from($tabel);
+        if($where !=""){
+            $this->db->where($where);
+        }
+        if($order !=""){
+            $this->db->order_by($order);
+        }
+        $query = $this->db->get();
+        return $query->result();    
+    }
+    
     function get($tabel,$where='',$order=''){
         $this->db->from($tabel);
         if($where !=""){
@@ -60,6 +100,28 @@ class Admin extends CI_Model
         }
         $query = $this->db->get();
         return $query->result();    
+    }
+    function get_row($tabel,$where='',$order=''){
+        $this->db->from($tabel);
+        if($where !=""){
+            $this->db->where($where);
+        }
+        if($order !=""){
+            $this->db->order_by($order);
+        }
+        $query = $this->db->get()->row();
+        return $query;    
+    }
+    function api_array($tabel,$where='',$order=''){
+        $this->db->from($tabel);
+        if($where !=""){
+            $this->db->where($where);
+        }
+        if($order !=""){
+            $this->db->order_by($order);
+        }
+        $query = $this->db->get();
+        return $query->result_array();    
     }
     function get_array($tabel,$where='',$order=''){
         $this->db->from($tabel);
@@ -72,7 +134,17 @@ class Admin extends CI_Model
         $query = $this->db->get();
         return $query->row_array();    
     }
-
+    function get_like_array($tabel,$where='',$order=''){
+        $this->db->from($tabel);
+        if($where !=""){
+            $this->db->like($where);
+        }
+        if($order !=""){
+            $this->db->order_by($order);
+        }
+        $query = $this->db->get();
+        return $query->result_array();    
+    }
     function get_result_array($tabel,$where='',$order='', $desc='desc', $limit=''){
         $this->db->from($tabel);
         if($where !=""){
@@ -87,17 +159,18 @@ class Admin extends CI_Model
         $query = $this->db->get();
         return $query->result_array();    
     }
-
-    function api_getmaster($tabel,$where='',$noorder=0){
-        $sql = "SELECT * FROM ". $tabel;
-        if($where !=''){
-            $sql.= " WHERE ". $where ;
+    function deleteTable($recnum, $id, $table)
+    {        
+        
+        $this->db->from($table);
+        $this->db->where($recnum, $id)->delete();
+        if ($this->db->affected_rows() > 0){
+            return true;      
+            
+        }else{
+            return false;
+          
         }
-        if($noorder==0){
-            $sql .= " order by Id Desc";
-        }
-        $query = $this->db->query($sql);
-        return $query->result();    
     }
 
     function api_post($table,$array_data)
@@ -115,104 +188,143 @@ class Admin extends CI_Model
             return $response;
         }
     }
-    function autocomplete($table, $orderby,$field_key,$keyword){
-        $this->db->like($field_key, $keyword , 'both');
-        $this->db->order_by($orderby, 'ASC');
-        $this->db->limit(10);
-        return $this->db->get($table)->result();
-    }
 
-    function getmaster($tabel,$where='',$order='',$groupby='',$select=''){
-        if($select !=""){
-            $this->db->select($select);
-        }
-        $this->db->from($tabel);
-        if($where !=""){
-            $this->db->where($where);
-        }
-        if($groupby !=""){
-            $this->db->group_by($groupby);
-        }
-        if($order !=""){
-            $this->db->order_by($order);
-        }
-        $query = $this->db->get();
-        // echo $this->db->last_query();exit();
-        return $query->result();   
-    }
-
-    function get_num_rows($tabel,$where='',$order='',$groupby='',$select=''){
-        if($select !=""){
-            $this->db->select($select);
-        }
-        $this->db->from($tabel);
-        if($where !=""){
-            $this->db->where($where);
-        }
-        if($groupby !=""){
-            $this->db->group_by($groupby);
-        }
-        if($order !=""){
-            $this->db->order_by($order);
-        }
-        $query = $this->db->get();
-        return $query->num_rows();   
-    }
-
-    function get_row($tabel,$where='',$select=''){
-        if($select !=""){
-            $this->db->select($select);
-        }
-        $this->db->from($tabel);
-        if($where !=""){
-            $this->db->where($where);
-        }
-        $query = $this->db->get();
-        return $query->row();   
-    }
-    function get_Function_id($func,$id, $order='')
-    {
-        $sql = "SELECT * from [$func] (". $id.")";
-        if($order != ""){
-            $sql .= " order by ". $order;
-        }
-        $query = $this->db->query($sql);
-        return $query->result();
-    }
     
-    function deleteTable($recnum, $id, $table)
-    {        
-        $this->db->from($table);
-        $this->db->where($recnum, $id)->delete();
-        if ($this->db->affected_rows() > 0){
-            return true;      
+    function send_notif_app_get($type = 'single', $token = '', $message = '' ,$topics = ''){
+        error_reporting(-1);
+        ini_set('display_errors', 'On');
+        
+        $fields = NULL;
+        
+        if($type == "single") {
+    
+            $res = array();
+            $res['body'] = $message;
             
+            $fields = array(
+                'to' => $token,
+                'notification' => $res,
+            );
+            // echo json_encode($fields);
+            
+        }else if($type == "topics") {
+            $res = array();
+            $res['body'] = $message;
+            
+            $fields = array(
+                'to' => '/topics/' . $topics,
+                'notification' => $res,
+            );
+            
+            // echo json_encode($fields);
+            // echo 'Topics : '. $topics . '<br/>Message : ' . $message . '<br>';
+        }
+        
+        // Set POST variables
+        $url = 'https://fcm.googleapis.com/fcm/send';
+        $server_key = "AAAA-XXzNh4:APA91bFtdWD6MfsRH3PeYz62vYQdCNFNoXZdi5BaOyZ6AiEdIqQpYjuBplob5baO7RCU6iw-ElrX6GH60g95fTE6ltK2ejbC9XXPcfFOby4BMuVTSi2LEnPMHAxgMforeOFnJN_gCu7l";
+        
+        $headers = array(
+            'Authorization: key=' . $server_key,
+            'Content-Type: application/json'
+        );
+        $ch = curl_init();
+ 
+        curl_setopt($ch, CURLOPT_URL, $url);
+ 
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+ 
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+        
+        $result = curl_exec($ch);
+        if ($result === FALSE) {
+            // echo 'Curl failed: ' . curl_error($ch);
         }else{
-            return false;
-          
+            // echo "<br>Curl Berhasil";
         }
+ 
+        curl_close($ch);
     }
-    
-
-    function checkRemoteFile($url)
-    {
-        // $ch = curl_init();
-        // curl_setopt($ch, CURLOPT_URL,$url);
-        // // don't download content
-        // curl_setopt($ch, CURLOPT_NOBODY, 1);
-        // curl_setopt($ch, CURLOPT_FAILONERROR, 1);
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        //if(curl_exec($ch)!==FALSE)
-        //var_dump(FCPATH);exit();
-        if(file_exists(FCPATH."assets/profile/".$url))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    function simpan_wa($hp, $msg){
+        $data = array(
+            'no_hp'      => $hp,
+            'pesan'   => $msg 
+        );
+        $this->db->insert('job_pesan', $data);
     }
-    
+    function kirim_wa($hp,$msg){
+        $fields = array(
+            //hp dedi
+            //'token' => 'ZaT2RwUa1UxucRF9tp99VaDrGm1Je8bw1iDsJXfDeBYY1GnXTY',
+            //ini hp prastika 
+            'token' => '3dzJEWidkwjwNYjo6LyoyQh53TqckT3QE14HxiGmthwV1N9Brt', 
+            //'token' => 'Fg97TQRRZ1cUk7vZhHHyEf2FsQgnmNoLRjaRpquDtyAHFu21km',
+            //hp redmi 8
+            //'token' => '5pCW3hv3WG1uWfRVQn4oqnNX84uURykBK1gzAZ4zvX8cjttm5e',
+            'number' => $hp,
+            'message' => $msg,
+            'date' => date("Y-m-d"),
+            'time' => date("H:i:s")
+        );
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://app.ruangwa.id/api/send_message',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS => 'token='. $fields['token'].'&number='.$fields['number'].'&message='.$fields['message']
+        ));
+
+        $response = curl_exec($curl);
+        $response = json_decode($response, true);
+        curl_close($curl);
+        return $response;
+    }
+
+    function cek_ongkir($asal_kota,$tujuan_kota, $berat, $kurir='ide'){
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://pro.rajaongkir.com/api/cost',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS => array(
+                'key' => '6257ae210b00dfa4d6cda76747341c7a',
+                'origin' => $asal_kota,
+                'destination' => $tujuan_kota,
+                'weight' => floatval($berat)*1000,
+                'courier' => $kurir,
+                'originType' => 'subdistrict',
+                'destinationType' => 'subdistrict'),
+        ));
+
+        $response = curl_exec($curl);
+        $response = json_decode($response, true);
+
+        curl_close($curl);
+        // print("<pre>".print_r($response,true)."</pre>");exit();
+
+
+        $results =  array();
+        if($response['rajaongkir']['status']['code'] === 400){
+            $results = [];
+        }else{
+            $results = $response['rajaongkir']['results'][0];
+        }
+
+        return $results;
+    }
 }

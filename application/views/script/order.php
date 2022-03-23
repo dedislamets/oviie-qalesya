@@ -63,7 +63,7 @@
 	        		for (let val of app.list_rekap) {
 	        			if(val.id_member == id_member){
 	        				val.ongkir = response.data.ongkir ;
-	        			}
+	        			}	
 	        		}
 	        	}else{
 	        		alert(response.data.msg);
@@ -88,6 +88,15 @@
 	          .then(response => {
 	          	// debugger;
 	            that.list_rekap = response.data.rekapan;
+
+	            let alphabet = "abcdefghijklm".split('');
+    			for (let val of that.list_rekap) {
+	    			if(alphabet.includes(val.nama_lengkap.charAt(0)) ){
+	    				val.admin = '08992994000';
+	    			}else{
+	    				val.admin = '08993994000';
+	    			}
+	    		}
 	          });
 
 	        }catch(e) {
