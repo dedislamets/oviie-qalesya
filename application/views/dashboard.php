@@ -26,6 +26,9 @@
       .navbar-white {
           background-color: #d4d4d4 !important;
       }
+      .sidebar-nav {
+        padding: 0;
+      }
     </style>
 </head>
 
@@ -390,7 +393,7 @@
 
     <!-- common app js -->
     <script src="<?= base_url() ?>assets/js/settings.js"></script>
-    <script src="<?= base_url() ?>assets/js/app.js"></script>
+    <!-- <script src="<?= base_url() ?>assets/js/app.js"></script> -->
     <script src="<?= base_url() ?>assets/node_modules/apexcharts/dist/apexcharts.js"></script>
 
     <!-- Page scripts -->
