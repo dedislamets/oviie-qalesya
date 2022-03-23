@@ -23,7 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
+// $config['base_url'] = 'http://localhost/oviieqalesyashop/';
 $config['base_url'] = 'https://oviieqalesyashopboutique.com/';
+
 // $config['base_url'] = 'https://www.wmlogistics.id/';
 
 
@@ -454,7 +456,11 @@ $config['csrf_token_name'] = 'csrf_token';
 $config['csrf_cookie_name'] = 'csrf_cookie_name';
 $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = FALSE;
-$config['csrf_exclude_uris'] = array('DailyAttendance/process','GenerateTable/crud','roleusers/add','Approval/reject','Api/absen');
+$config['csrf_exclude_uris'] = array(
+        'order/kurir',
+        'api/title/[a-z]+'
+);
+
 
 /*
 |--------------------------------------------------------------------------
