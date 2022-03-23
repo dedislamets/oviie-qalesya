@@ -208,6 +208,5 @@
         }
       
     </script>
-    <? $this->load->view($js); ?> 
 </body>
 </html>
