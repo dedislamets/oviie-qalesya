@@ -28,8 +28,7 @@
     </li>
     
 </ul> -->
-<? 
-// print("<pre>".print_r(menu(),true)."</pre>");exit();
+<?php 
 
 foreach (menu() as $key => $value) { 
 
