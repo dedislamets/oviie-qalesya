@@ -75,15 +75,15 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	// 'database' => 'oviie',
-	// 'hostname' => 'localhost',
-	// 'username' => 'root',
-	// 'password'	=> '',
-
-	'username' => 'u1723851_root',
-	'database' => 'u1723851_oviie',
+	'database' => 'oviie',
 	'hostname' => 'localhost',
-	'password'	=> 'KopiKapalApi05',
+	'username' => 'root',
+	'password'	=> '',
+
+	// 'username' => 'u1723851_root',
+	// 'database' => 'u1723851_oviie',
+	// 'hostname' => 'localhost',
+	// 'password'	=> 'KopiKapalApi05',
 	
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
