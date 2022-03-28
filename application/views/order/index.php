@@ -18,7 +18,7 @@
     <div class="card bd-primary card-tab mg-t-20">
       <div class="card-header bg-primary">
         <nav class="nav">
-          <a href="#rekapan" class="nav-link active" data-toggle="tab">Rekapan</a>
+          <a href="#rekapan" class="nav-link active" data-toggle="tab"></a>
         </nav>
       </div><!-- card-header -->
       <div class="card-body tab-content">
@@ -28,6 +28,13 @@
                   <label class="col-sm-2 col-form-label" style="font-weight: bold;">TANGGAL </label>
                   <div class="col-sm-3">
                     <input class="form-control" type="date" id="tanggal" name="tanggal" v-model="tanggal" @change="ganti" />
+                  </div>
+                  <label class="col-sm-2 col-form-label" style="font-weight: bold;">ID MEMBER </label>
+                  <div class="col-sm-3">
+                    <input class="form-control" type="text" id="member" name="member" v-model="member" @change="ganti" />
+                  </div>
+                  <div class="col-sm-2">
+                    <button type="button" href='javascript:void(0)' class='btn btn-block btn-warning btn-sm' @click="cari" >Cari</button>
                   </div>
                 </div>
             </div>
@@ -81,7 +88,7 @@
                                     <select :name="'kurir_' + log.id_member" @change="onChange($event,log.id_posting, log.id_member)" v-model="log.kurir">
                                         <option value="">Pilih</option>
                                         <option value="ide">IDE</option>
-                                        <option value="jne">JNE</option>    
+                                        <option value="lion">LION</option>    
                                     </select>
                                 </td>
                                 <td>
@@ -101,6 +108,7 @@
                                 <td style='font-weight:bold;background-color: #f7f7f7;'>Qty</td>
                                 <td style='font-weight:bold;background-color: #f7f7f7;'>Berat</td>
                                 <td style='font-weight:bold;background-color: #f7f7f7;'>Harga</td>
+                                <!-- <td style='font-weight:bold;background-color: #f7f7f7;'>Del</td> -->
                             </tr>
                             <tr v-for="(row, i) in log.detail">
                                 <td></td>
@@ -109,6 +117,11 @@
                                 <td>{{row.qty}}</td>
                                 <td>{{row.berat}}</td>
                                 <td>{{Number(row.harga).toLocaleString()}}</td>
+                                <td>
+                                    <a href='#' @click="onDelete(event,row.id)">
+                                        <span class="fa fa-trash"></span>
+                                    </a>
+                                </td>
                             </tr>
                         </template>
                         

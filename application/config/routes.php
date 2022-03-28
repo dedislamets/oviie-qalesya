@@ -56,6 +56,6 @@ $route['404_override'] = 'galat';
 $route['translate_uri_dashes'] = FALSE;
 
 
-$route['dgpack/dry-ice'] = "dgpack/dryice";
+$route['ubah-alamat'] = "lupa/ubah_alamat";
 
 // $route['^(rbac)/(.+)$'] = $route['default_controller']."/index/$1/$2";

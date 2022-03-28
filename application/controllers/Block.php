@@ -1,36 +1,58 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-ini_set('max_execution_time', 0); 
-ini_set('memory_limit','2048M');
 
-class Payment extends CI_Controller {
-	public function __construct(){
+class Block extends CI_Controller {
+	public function __construct()
+	{
 		parent::__construct();
-		$this->load->model('admin');
+	    $this->load->model('admin');
+	   	$this->load->model('M_menu','',TRUE);
+	   	
 	}
-
 	public function index()
 	{		
 		if($this->admin->logged_id())
-	    {
-			$data['title'] = 'Penjualan';
-			$data['main'] = 'payment/index';
-			$data['js'] = 'script/payment';
-      $data['modal'] = 'modal/none';
-			// $data['modal'] = 'modal/barang';
-	    // $data['jenis'] = $this->admin->getmaster('jenis_barang');
+    {
 
-			$this->load->view('dashboard',$data,FALSE); 
+			$data['title'] = 'Block Facebook';
+			$data['main'] = 'pesan/index';
+      $data['modal'] = 'modal/wa';
+			$data['js'] = 'script/pesan';
+      $config = $this->admin->get_array('tb_setting');
 
-	    }else{
-	        redirect("login");
+      $curl = curl_init();
 
-	    }				  						
+      curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://graph.facebook.com/' . $config['id_group'] . '/blocked?access_token=' . $config['token'],
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'GET',
+      ));
+
+      $response = curl_exec($curl);
+      $response = json_decode($response, true);
+
+      curl_close($curl);
+      print("<pre>".print_r($response,true)."</pre>");exit();
+
+
+
+			// $this->load->view('dashboard',$data,FALSE); 
+
+    }else{
+        redirect("login");
+
+    }				  
+						
 	}
 
-	public function dataTable()
-  	{
+  public function dataTable()
+  {
       $draw = intval($this->input->get("draw"));
       $start = intval($this->input->get("start"));
       $length = intval($this->input->get("length"));
@@ -56,21 +78,17 @@ class Payment extends CI_Controller {
 
       $valid_columns = array(
           0=>'id',
-          1=>'module',
-          2=>'system_date',
-          3=>'description',
-          4=>'type',
-          5=>'amount',
-          6 => 'balance',
+          1=>'no_hp',
+          2=>'pesan',
+          3=>'created',
+          4=>'sent',
       );
       $valid_sort = array(
           0=>'id',
-          1=>'module',
-          2=>'system_date',
-          3=>'description',
-          4=>'type',
-          5=>'amount',
-          6 => 'balance',
+          1=>'no_hp',
+          2=>'pesan',
+          3=>'created',
+          4=>'sent',
       );
       if(!isset($valid_sort[$col]))
       {
@@ -102,20 +120,20 @@ class Payment extends CI_Controller {
           }                 
       }
       $this->db->limit($length,$start);
-      $this->db->from("mutasi");
-
+      $this->db->from("job_pesan");
+      // $this->db->where("sent",0);
       $pengguna = $this->db->get();
       $data = array();
       foreach($pengguna->result() as $r)
       {
+
           $data[] = array( 
                       $r->id,
-                      strtoupper($r->module),
-                      $r->system_date,
-                      $r->description,
-                      $r->type,
-                      number_format($r->amount),
-                      number_format($r->balance),
+                      $r->no_hp,
+                      '<a href="#" data-id="'. $r->id .'" onclick="lihatpesan(this)">Lihat Pesan</a>',
+                      $r->sent,
+                      $r->created,
+                      $r->created,
                  );
       }
       $total_pengguna = $this->totalPengguna($search, $valid_columns);
@@ -128,13 +146,13 @@ class Payment extends CI_Controller {
       );
       echo json_encode($output);
       exit();
-  	}
+  }
 
-  	public function totalPengguna($search, $valid_columns)
-  	{
-    	$query = $this->db->select("COUNT(*) as num");
-    	if(!empty($search))
-      	{
+  public function totalPengguna($search, $valid_columns)
+  {
+    $query = $this->db->select("COUNT(*) as num");
+    if(!empty($search))
+      {
           $x=0;
           foreach($valid_columns as $sterm)
           {
@@ -148,14 +166,19 @@ class Payment extends CI_Controller {
               }
               $x++;
           }                 
-      	}
+      }
+      $this->db->from("job_pesan");
+      // $this->db->where("sent",0);
+      $query = $this->db->get();
+    	$result = $query->row();
+    	if(isset($result)) return $result->num;
+    	return 0;
+  }
 
-	    $this->db->from("mutasi");
-	    $query = $this->db->get();
-	    $result = $query->row();
-	    if(isset($result)) return $result->num;
-	    return 0;
-  	}
-
-  	
+  public function wa()
+  {
+      $data = $this->admin->get_row("job_pesan" ,array('id' => $this->input->get('id',true) ));
+      $this->output->set_content_type('application/json')->set_output(json_encode($data));
+  }
+    
 }

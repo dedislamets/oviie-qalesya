@@ -14,6 +14,7 @@ class Posting extends CI_Controller {
             $data['title'] = 'Posting';
             $data['main'] = 'posting/index';
 			$data['js'] = 'script/posting';
+			$data['modal'] = 'modal/none';
             $data['config'] = $this->admin->get_array('tb_setting');
 			$this->load->view('dashboard',$data,FALSE); 
 

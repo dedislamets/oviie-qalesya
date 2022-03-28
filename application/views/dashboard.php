@@ -7,6 +7,7 @@
     <link href="<?= base_url() ?>assets/css/application.min.css" rel="stylesheet">
     <link href="<?= base_url() ?>assets/main/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="<?= base_url() ?>assets/main/lib/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/bower_components/jstree/css/style.min.css">
     <!-- as of IE9 cannot parse css files with more that 4K classes separating in two files -->
     <!--[if IE 9]>
         <link href="css/application-ie9-part2.css" rel="stylesheet">
@@ -28,6 +29,9 @@
       }
       .sidebar-nav {
         padding: 0;
+      }
+      .error {
+        color: red;
       }
     </style>
 </head>
@@ -124,87 +128,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown nav-item">
-                        <a href="#"
-                           class="nav-link"
-                           id="notifications-dropdown-toggle"
-                           data-toggle="dropdown"
-                           aria-haspopup="true"
-                           aria-expanded="false"
-                           data-position="bottom-middle-aligned"
-                           data-disable-interaction="false"
-                        >
-                            <i class="icons email-icon"></i>
-                            <i class="fa fa-circle text-success"></i>
-                        </a>
-                        <ul tabindex="-1" class="dropdown-menu dropdown-menu-messages dropdown-menu-right comments">
-                            <p class="dropdown-name">New Messages</p>
-                            <p class="dropdown-date text-warning mt-n2">5 new messages</p>
-                            <p class="dropdown-date">Today</p>
-                            <li role="presentation">
-                                <a role="menuitem" target="_self" href="#" class="dropdown-item">
-                                        <span class="avatar thumb-sm mr-3">
-                                            <img src="<?= base_url() ?>assets/img/avatars/tn1.png" alt="..." class="rounded-circle">
-                                            <span class="dropdown-time">9:15 AM</span>
-                                        </span>
-                                    <div>
-                                         <span class="fw-bold">Jim Tomson </span><br> Hey! How is it going?
-                                    </div>
-                                    <div class="ml-auto">
-                                        <span class="badge badge-secondary badge-pill">2</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a role="menuitem" target="_self" href="#" class="dropdown-item">
-                                        <span class="avatar thumb-sm mr-3">
-                                            <img src="<?= base_url() ?>assets/img/avatars/tn2.png" alt="..." class="rounded-circle">
-                                            <span class="dropdown-time">9:15 AM</span>
-                                        </span>
-                                    <div>
-                                        <span class="fw-bold">Elena Bureeva </span><br> Good news!
-                                    </div>
-                                    <div class="ml-auto">
-                                        <span class="badge badge-secondary badge-pill">1</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <p class="dropdown-date">Yesterday</p>
-                            <li role="presentation">
-                                <a role="menuitem" target="_self" href="#" class="dropdown-item">
-                                        <span class="avatar thumb-sm mr-3">
-                                            <img src="<?= base_url() ?>assets/img/avatars/tn1.png" alt="..." class="rounded-circle">
-                                            <span class="dropdown-time">9:15 AM</span>
-                                        </span>
-                                    <div>
-                                        <span class="fw-bold">Jim Tomson </span><br> Nice to see you again!
-                                    </div>
-                                    <div class="ml-auto">
-                                        <span class="badge badge-secondary badge-pill">1</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a role="menuitem" target="_self" href="#" class="dropdown-item">
-                                        <span class="avatar thumb-sm mr-3">
-                                            <img src="<?= base_url() ?>assets/img/avatars/tn3.png" alt="..." class="rounded-circle">
-                                            <span class="dropdown-time">9:15 AM</span>
-                                        </span>
-                                    <div>
-                                        <span class="fw-bold">Jim Tomson </span><br> Nice to see you again!
-                                    </div>
-                                    <div class="ml-auto">
-                                        <span class="badge badge-secondary badge-pill">1</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <button role="menuitem" type="button" class="dropdown-item">
-                                    <span class="ml-auto text-warning">See more
-                                        <i class="fa fa-arrow-right ml-1"></i>
-                                    </span>
-                            </button>
-                        </ul>
-                    </li>
+              
                     <li class="dropdown nav-item">
                         <a
                                 href="#"
@@ -222,10 +146,10 @@
                             </span>
                         </a>
                         <ul tabindex="-1" class="dropdown-menu dropdown-menu-messages dropdown-menu-right comments profile">
-                            <p class="dropdown-name">Sara Smith</p>
-                            <p class="dropdown-date text-warning mt-n2">Sara_smith@gmail.com</p>
+                            <p class="dropdown-name"><?= $this->session->userdata('username') ?></p>
+                            <p class="dropdown-date text-warning mt-n2"><?= $this->session->userdata('email') ?></p>
     
-                            <li role="presentation">
+                            <!-- <li role="presentation">
                                 <a role="menuitem" target="_self" href="#" class="dropdown-item">
                                     <span class="mr-3">
                                         <img src="<?= base_url() ?>assets/img/icons/settings_outlined.svg" alt="...">
@@ -244,9 +168,9 @@
                                         <span>Account </span>
                                     </div>
                                 </a>
-                            </li>
+                            </li> -->
                             <li role="presentation">
-                                <a role="menuitem" target="_self" href="login.html" class="dropdown-item">
+                                <a role="menuitem" target="_self" href="<?= base_url() ?>login/keluar" class="dropdown-item">
                                         <span class="mr-3">
                                             <img src="<?= base_url() ?>assets/img/icons/logout_outlined.svg" alt="...">
                                         </span>
@@ -269,7 +193,8 @@
                     <img src="<?= base_url() ?>assets/img/logo.svg" alt="...">
                     <b class="fw-bold">Oviie</b> Qalesya</a>
             </header>
-            <h5 class="sidebar-nav-title">App</h5>
+            <?php $this->load->view('nav'); ?>
+            <!-- <h5 class="sidebar-nav-title">App</h5>
             <ul class="sidebar-nav">
                 <li class=" active ">
                     <a href="<?= base_url() ?>dashboard">
@@ -284,26 +209,36 @@
                     </a>
                 </li>
             </ul>
-            <h5 class="sidebar-nav-title">Master </h5>
+
             <ul class="sidebar-nav">
                 <li class="">
-                    <a href="<?= base_url() ?>barang">
+                    <a class="" href="#sidebar-product" data-toggle="collapse" data-parent="#sidebar" aria-expanded="true">
                         <i class="sidebar-icon typography-icon"></i>
-                        <span class="icon">Barang</span>
+                        <span class="icon">Master</span>
+                        <i class="toggle fa fa-angle-down"></i>
                     </a>
+                    <ul id="sidebar-product" class="collapse" style="">
+                        <li class="" style="margin:0">
+                            <a href="<?= base_url() ?>barang">
+                                <i class="sidebar-icon typography-icon"></i>
+                                <span class="icon">Barang</span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="<?= base_url() ?>users">
+                                <i class="sidebar-icon account-icon"></i>
+                                <span class="icon">User</span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="<?= base_url() ?>members">
+                                <i class="sidebar-icon ui-elements"></i>
+                                <span class="icon">Members</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="">
-                    <a href="<?= base_url() ?>users">
-                        <i class="sidebar-icon account-icon"></i>
-                        <span class="icon">User</span>
-                    </a>
-                </li>
-                <li class="">
-                    <a href="<?= base_url() ?>members">
-                        <i class="sidebar-icon ui-elements"></i>
-                        <span class="icon">Members</span>
-                    </a>
-                </li>
+                
             </ul>
             <ul class="sidebar-nav">
                 <hr>
@@ -349,7 +284,7 @@
                         <span class="icon">Logout</span>
                     </a>
                 </li>
-            </ul>
+            </ul> -->
         </div>
     </nav>
     <div class="content-wrap">
@@ -392,8 +327,10 @@
     <script src="<?= base_url() ?>assets/node_modules/jquery-hammerjs/jquery.hammer.js"></script>
 
     <!-- common app js -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="<?= base_url() ?>assets/js/settings.js"></script>
-    <!-- <script src="<?= base_url() ?>assets/js/app.js"></script> -->
+    <script src="<?= base_url() ?>assets/js/app.js"></script>
     <script src="<?= base_url() ?>assets/node_modules/apexcharts/dist/apexcharts.js"></script>
 
     <!-- Page scripts -->
@@ -414,13 +351,44 @@
     <script src="<?= base_url() ?>assets/node_modules/summernote/dist/summernote.js"></script>
     <script src="<?= base_url() ?>assets/main/lib/datatables/jquery.dataTables.js"></script>
     <script src="<?= base_url() ?>assets/main/lib/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="<?= base_url(); ?>assets/js/plugins/jquery.validate.min.js"></script>
+    <script src="<?= base_url(); ?>assets/bower_components/jstree/js/jstree.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script src="<?= base_url() ?>assets/js/components/ui-modal.js"></script> -->
+    <script type="text/javascript">
+        function alertOK(href="") {
+         Swal.fire({ title: "Berhasil disimpan..!",
+             text: "",
+             timer: 2000,
+             icon: 'success',
+             showConfirmButton: false,
+             willClose: () => {
+               if(href != "")
+                  href;
+            }
+          });
+      }
+
+      function alertError(textError = "'Silahkan cek kembali data anda!'") {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: textError,
+            showConfirmButton: false,
+            timer: 2000,
+          })
+      }
+    </script>
     <!-- page specific js -->
     <!-- <script src="<?= base_url() ?>assets/js/form/form-elements.js"></script> -->
     <?php
       $this->load->view($js); 
     ?>
+    <?php
+      $this->load->view($modal); 
+    ?>
+
 
 </body>
 

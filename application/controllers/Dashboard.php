@@ -14,7 +14,7 @@ class Dashboard extends CI_Controller {
             $data['title'] = 'Home';
             $data['main'] = 'dashboard';
 			$data['js'] = 'dashboard/js';
-            $data['modal'] = 'modal/dashboard';
+            $data['modal'] = 'modal/none';
             $data['config'] = $this->admin->get_array('tb_setting');
 			$this->load->view('dashboard',$data,FALSE); 
 

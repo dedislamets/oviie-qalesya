@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/nice-select.css">
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet">
     <style type="text/css">
         body {
             display: flex;
@@ -37,7 +38,7 @@
             margin-bottom: 5px;
             font-size: 40px;
             letter-spacing: 10px;
-            font-family: 'Caveat', cursive;
+            font-family: 'Kalam', cursive;
             color: #fff;
             text-shadow: 0 2px 5px #808080;
             /*-webkit-text-stroke: 1px #808080;*/
@@ -46,7 +47,7 @@
             margin: 0 0 50px 0;
             font-size: 30px;
             /*font-family: sans-serif;*/
-            font-family: 'Caveat', cursive;
+            font-family: 'Kalam', cursive;
             /*letter-spacing: 4px;*/
             color: #fff;
             font-weight: bold;
@@ -55,7 +56,7 @@
         }
         small {
             display: block;
-            font-family: 'Pacifico', cursive;
+            font-family: 'Kalam', cursive;
             letter-spacing: 2px;
             color: #fff;
             font-size: 10px;
@@ -65,7 +66,7 @@
             background-color: #fff;
             border: 3px solid gold;
             border-radius: 50px;
-            font-family: 'Caveat', cursive;
+            font-family: 'Kalam', cursive;
             -webkit-transition: all .15s ease-in-out;
             transition: all .15s ease-in-out;
             color: hsla(37, 95%, 67%, 1);

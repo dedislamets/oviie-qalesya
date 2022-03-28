@@ -17,6 +17,7 @@ class Setup extends CI_Controller {
             $data['title'] = 'Home';
             $data['main'] = 'setup/index';
             $data['js'] = 'script/no-script';
+            $data['modal'] = 'modal/none';
             $data['setup'] = $this->admin->getmaster('tb_setting');
             $this->load->view('dashboard',$data,FALSE); 
 

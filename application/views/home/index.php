@@ -9,8 +9,8 @@
         </div>
         <div class="col-md-4 col-sm-12 col-xs-12 float-right">
             <div class="btn btn-block button-1" onclick="window.location.href='<?= base_url() ?>daftar'">Daftar Member Baru</div>
-            <div class="btn btn-block button-1" >Lupa Member ID</div>
-            <div class="btn btn-block button-1">Ubah Alamat Pengiriman</div>
+            <a href="<?= base_url() ?>lupa" class="btn btn-block button-1" >Lupa Member ID</a>
+            <a href="<?= base_url() ?>ubah-alamat" class="btn btn-block button-1">Ubah Alamat Pengiriman</a>
             <div class="btn btn-block button-1" >Cara Order</div>
             <div class="btn btn-block button-1">WhatsApp Admin</div>
         </div>

@@ -22,7 +22,7 @@
   <link href="<?= base_url(); ?>assets/css/paper-dashboard.min.css?v=2.1.1" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="<?= base_url(); ?>assets/demo/demo.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet">
   
   <!-- Extra details for Live View on GitHub Pages -->
   <!-- Google Tag Manager -->
@@ -36,8 +36,15 @@
       border: 1px solid #ddd !important;
        border-left: 0 !important;
     }
+    .bootstrap-select .bs-searchbox .form-control {
+        border: solid 1px;
+    }
     h3{
       font-family: 'Kalam', cursive;
+    }
+    p{
+      font-family: 'Kalam', cursive;
+      font-size: 18px;
     }
     .filter-option {
       font-family: 'Kalam', cursive;
@@ -51,151 +58,54 @@
         color: #999;
         background-color: black;
     }
+    .hidden{
+      display: none;
+    }
 
   </style>
 </head>
 
 <body class="login-page">
 
-  <!-- End Google Tag Manager (noscript) -->
-  <!-- Navbar -->
   
   <!-- End Navbar -->
   <div class="wrapper wrapper-full-page ">
     <div class="full-page section-image">
-      <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
       <div class="content">
         <div class="container">
           <div class="col-lg-6 col-md-8 ml-auto mr-auto">
-            <!-- <div style="margin-bottom: 10px;">
-              <img  src="<?= base_url()?>assets/images/banner.png" />
-            </div> -->
-          	<?php if(isset($error)) { echo $error; }; ?>
-            <form method="POST" action="<?php echo base_url() ?>index.php/register/daftar">
-              <div class="card card-login">
-                <div class="card-header ">
-                  <div class="card-header ">
 
-                    <h3 class="header text-center">DAFTAR CUSTOMER BARU</h3>
-                    <!-- <p style="text-align: center;">Formulir Pendaftaran</p> -->
-                    <?php if ($this->session->flashdata('message')) { ?>
-                      <div class="alert alert-warning" style="font-size: 20px;color: navy;text-align: center;"> <?= $this->session->flashdata('message') ?> </div>
-                    <?php } ?>
-                  </div>
-                </div>
-                <div class="card-body ">
-                  <div class="input-group">
-                    <!-- <label style="padding: 10px;font-weight: 500;font-size: 16px;">Email *</label> -->
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <!-- <i class="nc-icon nc-single-02"></i> -->
-                      </span>
-                    </div>
-                    <input type="email" name="email" class="form-control" placeholder="Masukkan Email Anda" />
-                    <?php echo form_error('email'); ?>
-                  </div>
-                  <div class="input-group">
-                    <!-- <label style="padding: 10px;font-weight: 500;font-size: 16px;">Nama Facebook *</label> -->
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <!-- <i class="nc-icon nc-key-25"></i> -->
-                      </span>
-                    </div>
-                    <input type="text" name="nama_facebook" class="form-control" placeholder="Nama Facebook" required />
-                    <?php echo form_error('nama_facebook'); ?>
-                  </div>
+          	<?php if(isset($error)) { echo $error; }; ?>
+            <div class="card card-login hidden" style="padding-top: 10px;" id="panel-info">
+              <div class="card-body ">
+                <h4 class="header text-center">Silahkan Ubah Alamat Anda :</h4>
+                <form method="POST" action="<?php echo base_url() ?>lupa/save_alamat" >
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text">
                         <!-- <i class="nc-icon nc-key-25"></i> -->
                       </span>
                     </div>
-                    <input type="text" name="nomor_wa" class="form-control" placeholder="Nomor Whatsapp" required />
-                    <?php echo form_error('nomor_wa'); ?>
-                  </div>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <!-- <i class="nc-icon nc-key-25"></i> -->
-                      </span>
-                    </div>
-                    <input type="text" name="nama_lengkap" class="form-control" placeholder="Nama Lengkap" required />
-                    <?php echo form_error('nama_lengkap'); ?>
-                  </div>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <!-- <i class="nc-icon nc-key-25"></i> -->
-                      </span>
-                    </div>
-                    <textarea rows="2" name="alamat_lengkap" class="form-control" placeholder="Alamat Lengkap" required></textarea>
+                    <textarea rows="2" name="alamat_lengkap" id="alamat_lengkap" class="form-control" placeholder="Alamat Lengkap" required></textarea>
                     <?php echo form_error('alamat_lengkap'); ?>
                   </div>
-                  <!-- <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                      </span>
-                    </div>
-                    <select name="provinsi" id="provinsi" class="form-control selectpicker" data-live-search="true" required>
-                      <option value="">Pilih Provinsi</option>
-                      <?php 
-                      foreach($provinsi as $row)
-                      { 
-                        echo '<option value="'.$row->provinsi.'">'.$row->provinsi.'</option>';
-                      }
-                      ?>
-                    </select>
-                    <?php echo form_error('provinsi'); ?>
-                  </div>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                      </span>
-                    </div>
-                    <select name="kota" id="kota" class="form-control" required>
-                      <option value="">Pilih Kota</option>
-                      <?php 
-                      foreach($kota as $row)
-                      { 
-                        echo '<option value="'.$row->kota.'">'.$row->kota.'</option>';
-                      }
-                      ?>
-                    </select>
-                    <?php echo form_error('kota'); ?>
-                  </div>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                      </span>
-                    </div>
-                    <select name="kecamatan" id="kecamatan" class="form-control" required                           >
-                      <option value="">Pilih Kecamatan</option>
-                      <?php 
-                        foreach($kecamatan as $row)
-                        { 
-                          echo '<option value="'.$row->kecamatan.'">'.$row->kecamatan.'</option>';
-                        }
-                        ?>
-                    </select>
-                    <?php echo form_error('kecamatan'); ?>
-                  </div> -->
 
                   <div class="input-group">
-                    <div style="display: block;width: 100%;font-family: 'Courgette', cursive;font-size: 23px;">Kelurahan</div>
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                      </span>
-                    </div>
-                    <select name="kelurahan" id="kelurahan" class="form-control selectpicker" data-live-search="true" required>
-                      <option value="">Pilih Kelurahan</option>
-                      <?php 
-                      foreach($kelurahan as $row)
-                      { 
-                        echo '<option value="'.$row->kelurahan.'">'.$row->kelurahan.'</option>';
-                      }
-                      ?>
-                    </select>
-                    <?php echo form_error('kelurahan'); ?>
+                      <div style="display: block;width: 100%;font-family: 'Courgette', cursive;font-size: 23px;">Kelurahan</div>
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                        </span>
+                      </div>
+                      <select name="kelurahan" id="kelurahan" class="form-control selectpicker" data-live-search="true" required data-live-search-placeholder="Ketik disini...">
+                        <option value="">Pilih Kelurahan</option>
+                        <?php 
+                        foreach($kelurahan as $row)
+                        { 
+                          echo '<option value="'.$row->kelurahan.'">'.$row->kelurahan.'</option>';
+                        }
+                        ?>
+                      </select>
+                      <?php echo form_error('kelurahan'); ?>
                   </div>
                   <div>
                     <table style="width: 100%;font-family: 'Courgette', cursive;font-size: 20px;">
@@ -211,23 +121,60 @@
                       </tr>
                     </table>
                   </div>
-                  
-                </div>
-                <div class="card-footer ">
                   <input type="hidden" name="kecamatan" id="kecamatan" value="">
                   <input type="hidden" name="kota" id="kota" value="">
                   <input type="hidden" name="provinsi" id="provinsi" value="">
-                	<button type="submit" class="btn btn-warning btn-round btn-block mb-3">
+                  <input type="hidden" name="kode_member" id="kode_member" value="">
+                  <input type="hidden" id="csrf_token" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" >
+                  <button type="submit" id="submitAlamat" class="btn btn-warning btn-round btn-block mb-3">
+                    <span class="bigger-110">Submit</span>
+                  </button>
+                </form>
+              </div>
+              <p class="font-weight-bold text-uppercase text-center mb-2"><a href="<?= base_url()?>ubah-alamat">Kembali</a></p>
+            </div>
+            <form method="POST" id="panel-cari">
+              <div class="card card-login">
+                <div class="card-header ">
+                  <div class="card-header ">
+
+                    <h3 class="header text-center" style="margin-bottom: 10px">UBAH ALAMAT</h3>
+                    <p style="text-align: center;">Ini digunakan untuk alamat pengiriman</p>
+                    <?php if ($this->session->flashdata('message')) { ?>
+                      <div class="alert alert-success" style="font-size: 20px;color: navy;text-align: center;"> <?= $this->session->flashdata('message') ?> </div>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="card-body ">
+                  <div class="input-group" style="margin-bottom: 5px">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="nc-icon nc-phone-25"></i>
+                      </span>
+                    </div>
+                    <input type="text" name="id_member" id="id_member" class="form-control" placeholder="Member ID" required />
+                    <?php echo form_error('id_member'); ?>
+                  </div>
+                  <div class="input-group" style="margin-bottom: 5px">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="nc-icon nc-phone-25"></i>
+                      </span>
+                    </div>
+                    <input type="text" name="nomor_wa" id="nomor_wa" class="form-control" placeholder="Nomor Whatsapp" required />
+                    <?php echo form_error('nomor_wa'); ?>
+                  </div>
+                  
+                </div>
+                <div class="card-footer ">
+                  
+                	<button type="button" id="submit" class="btn btn-warning btn-round btn-block mb-3">
 						        <!-- <i class="ace-icon fa fa-key"></i> -->
 						        <span class="bigger-110">Submit</span>
 					        </button>
                   
                 </div>
-                <p class="font-weight-bold text-uppercase text-center mb-2">Lupa Member ID? <a href="<?= base_url()?>lupa">Klik Disini</a></p>
-                <p class="font-weight-bold text-uppercase text-center mb-2">Mau Ubah Alamat? <a href="https://www.butikmelati.com/change_address">Klik Disini</a></p>
-                <p class="font-weight-bold text-uppercase text-center mb-2">Cara Order <a href="https://www.butikmelati.com/how_to">Klik Disini</a></p>
-                <!-- <hr>
-                <p class="font-weight-bold text-uppercase text-center mb-2">WhatsApp Admin : 0822 1666 6206</p> -->
+                <p class="font-weight-bold text-uppercase text-center mb-2"><a href="<?= base_url()?>">Kembali</a></p>
               </div>
               <input type="hidden" id="csrf_token" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" >
               
@@ -288,30 +235,40 @@
   <script src="<?= base_url(); ?>assets/demo/demo.js"></script>
   <!-- Sharrre libray -->
   <script src="<?= base_url(); ?>assets/js/plugins/jquery.sharrre.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script>
     $(document).ready(function() {
-      // $.get('https://pro.rajaongkir.com/api/province?key=6257ae210b00dfa4d6cda76747341c7a', null, function(data){ 
-      //   var result = data.rajaongkir.results;
-      //   $('#provinsi').empty();
-      //   $.each(result,function(i,value){
-      //         $('#provinsi').append('<option value="'+value.province+'">'+value.province+'</option>');
-      //     })
-      // });
+
       $("submit").dblclick(function(e) {
           e.preventDefault();
           alert('dilarang double click');
       });
+      $('#submit').on('click', function (event) {
+          event.preventDefault();
+          $.get('<?= base_url()?>lupa/cek_member_id', {no: $("#nomor_wa").val(), id: $("#id_member").val()}, function(data){ 
+            if(data === null){
+              $("#panel-info").css("display","none");
+              $("#panel-cari").css("display","block");
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Data tidak ditemukan !!',
+                showConfirmButton: false,
+                timer: 2000,
+              })
+            }else{
+              $("#panel-info").css("display","block");
+              $("#panel-cari").css("display","none");
+              $("#alamat_lengkap").text(data.alamat.replace(/\<br\>/g, " "));
+              $("#kelurahan").val(data.kelurahan);
+              $("#kode_member").val(data.kode_member);
+              $('.selectpicker').selectpicker('refresh');
+              $('#kelurahan').trigger('change');
+            }
+          })
+      });
       
-      $("#provinsi").change(function(e, params){ 
-          getKota($('#provinsi').val(),'kota');
-      });
-      $("#kota").change(function(e, params){   
-          getKecamatan($('#kota').val(),'kecamatan');
-      });
-      $("#kecamatan").change(function(e, params){   
-          getKelurahan($('#kecamatan').val(),'kelurahan');
-      });
-
       $("#kelurahan").change(function(e, params){  
         $.get('<?= base_url()?>daftar/getAll', { kel: $(this).val()  }, function(data){ 
 
@@ -324,47 +281,7 @@
 
         });
       })
-
-      function getKota(val,name){
-        $.get('<?= base_url()?>daftar/getKota', { prov: val  }, function(data){ 
-
-          $('#' + name).empty();
-          var kota_def = '';
-          $.each(data,function(i,value){
-            if(i==0) kota_def = value.type + '. ' + value.city_name;
-            $('#' + name).append('<option value="'+ value.type + '. ' + value.city_name +'">'+ value.type + ' ' + value.city_name +'</option>');
-          })
-
-          getKecamatan(kota_def,'kecamatan');
-
-        });
-          
-
-          // $('#kelurahan').empty();
-          // $('#kelurahan').append('<option value="">Pilih Kelurahan</option>');
-      }
-      function getKecamatan(val,name){
-        $.get('<?= base_url()?>daftar/getKecamatan', { kota: val  }, function(data){ 
-
-          $('#' + name).empty();
-          $('#kecamatan').append('<option value="">Pilih Kecamatan</option>');
-          $.each(data,function(i,value){
-                  $('#' + name).append('<option value="'+value.subdistrict_name+'">'+value.subdistrict_name+'</option>');
-              })
-          });
-
-          $('#kelurahan').empty();
-          $('#kelurahan').append('<option value="">Pilih Kelurahan</option>');
-      }
-      function getKelurahan(val,name){
-        $.get('<?= base_url()?>daftar/getKelurahan', { kec: val  }, function(data){ 
-
-          $('#' + name).empty();
-            $.each(data,function(i,value){
-                  $('#' + name).append('<option value="'+value.kelurahan+'">'+value.kelurahan+'</option>');
-              })
-          });
-      }
+      
     });
   </script>
   <script>

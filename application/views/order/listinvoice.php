@@ -27,49 +27,255 @@
         
       </div><!-- card-header -->
       <div class="card-body">
-
-        <div class="table-wrapper">
-            <table id="InvoiceList" class="table table-striped" width="100%">
-                <thead class="text-primary">
-                    <tr>
-                        <th style="width: 100px">
-                          No Invoice
-                        </th>
-                        <th>
-                          Tgl Invoice
-                        </th>
-                        <th>
-                          Expired
-                        </th>
-                        <th>
-                          Nama Pemesan
-                        </th>
+        <div class="row">
+          <div class="col-lg-12">
+                <div class="clearfix">
+                    <ul class="nav nav-tabs float-left mb-0" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-expanded="true" aria-selected="true">Pending</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#assumtion" role="tab" aria-controls="assumtion" aria-expanded="false" aria-selected="false">Deposit</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="paid-tab" data-toggle="tab" href="#paid" role="tab" aria-controls="assumtion" aria-expanded="false" aria-selected="false">Paid</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="delivery-tab" data-toggle="tab" href="#assumtion" role="tab" aria-controls="assumtion" aria-expanded="false" aria-selected="false">Delivery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="cancel-tab" data-toggle="tab" href="#cancel" role="tab" aria-controls="assumtion" aria-expanded="false" aria-selected="false">
+                            Cancel
+                        </a>
                         
-                        <th>
-                          Qty
-                        </th>
-                        <th>
-                          Berat
-                        </th>
-                        <th>
-                          Ongkir
-                        </th>
-                        <th>
-                          Subtotal
-                        </th>
-                        <th>
-                          Status
-                        </th>
-                        <th>
-                          Aksi
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                  
-                </tbody>
-            </table>
+                    </li>
+                </ul>
+                </div>
+                <div class="tab-content shadow rounded-bottom mb-lg" id="myTabContent">
+                    <div role="tabpanel" class="tab-pane in clearfix active" id="basic" aria-labelledby="basic-tab" aria-expanded="true">
+                      <div class="table-wrapper">
+                          <table id="InvoiceList" class="table table-striped" width="100%">
+                              <thead class="text-primary">
+                                  <tr>
+                                      <th style="width: 100px">
+                                        No Invoice
+                                      </th>
+                                      <th>
+                                        Tgl Invoice
+                                      </th>
+                                      <th>
+                                        Expired
+                                      </th>
+                                      <th>
+                                        Nama Pemesan
+                                      </th>
+                                      
+                                      <th>
+                                        Qty
+                                      </th>
+                                      <th>
+                                        Berat
+                                      </th>
+                                      <th>
+                                        Ongkir
+                                      </th>
+                                      <th>
+                                        Subtotal
+                                      </th>
+                                      <th>
+                                        Status
+                                      </th>
+                                      <th>
+                                        Aksi
+                                      </th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                
+                              </tbody>
+                          </table>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="assumtion" role="tabpanel" aria-labelledby="assumtion-tab" aria-expanded="false">
+                      <div class="table-wrapper">
+                          <table id="InvoiceListDeposit" class="table table-striped" width="100%">
+                              <thead class="text-primary">
+                                  <tr>
+                                      <th style="width: 100px">
+                                        No Invoice
+                                      </th>
+                                      <th>
+                                        Tgl Invoice
+                                      </th>
+                                      <th>
+                                        Expired
+                                      </th>
+                                      <th>
+                                        Nama Pemesan
+                                      </th>
+                                      
+                                      <th>
+                                        Qty
+                                      </th>
+                                      <th>
+                                        Berat
+                                      </th>
+                                      <th>
+                                        Ongkir
+                                      </th>
+                                      <th>
+                                        Subtotal
+                                      </th>
+                                      <th>
+                                        Status
+                                      </th>
+                                      <th>
+                                        Aksi
+                                      </th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                
+                              </tbody>
+                          </table>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="paid" role="tabpanel" aria-labelledby="paid-tab" aria-expanded="false">
+                      <div class="table-wrapper">
+                          <table id="InvoiceListPaid" class="table table-striped" width="100%">
+                              <thead class="text-primary">
+                                  <tr>
+                                      <th style="width: 100px">
+                                        No Invoice
+                                      </th>
+                                      <th>
+                                        Tgl Invoice
+                                      </th>
+                                      <th>
+                                        Expired
+                                      </th>
+                                      <th>
+                                        Nama Pemesan
+                                      </th>
+                                      
+                                      <th>
+                                        Qty
+                                      </th>
+                                      <th>
+                                        Berat
+                                      </th>
+                                      <th>
+                                        Ongkir
+                                      </th>
+                                      <th>
+                                        Subtotal
+                                      </th>
+                                      <th>
+                                        Status
+                                      </th>
+                                      <th>
+                                        Aksi
+                                      </th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                
+                              </tbody>
+                          </table>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="delivery" role="tabpanel" aria-labelledby="delivery-tab" aria-expanded="false">
+                      <div class="table-wrapper">
+                          <table id="InvoiceListDelivery" class="table table-striped" width="100%">
+                              <thead class="text-primary">
+                                  <tr>
+                                      <th style="width: 100px">
+                                        No Invoice
+                                      </th>
+                                      <th>
+                                        Tgl Invoice
+                                      </th>
+                                      <th>
+                                        Expired
+                                      </th>
+                                      <th>
+                                        Nama Pemesan
+                                      </th>
+                                      
+                                      <th>
+                                        Qty
+                                      </th>
+                                      <th>
+                                        Berat
+                                      </th>
+                                      <th>
+                                        Ongkir
+                                      </th>
+                                      <th>
+                                        Subtotal
+                                      </th>
+                                      <th>
+                                        Status
+                                      </th>
+                                      <th>
+                                        Aksi
+                                      </th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                
+                              </tbody>
+                          </table>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="cancel" role="tabpanel" aria-labelledby="cancel-tab" aria-expanded="false">
+                        <div class="table-wrapper">
+                          <table id="InvoiceListCancel" class="table table-striped" width="100%">
+                              <thead class="text-primary">
+                                  <tr>
+                                      <th style="width: 100px">
+                                        No Invoice
+                                      </th>
+                                      <th>
+                                        Tgl Invoice
+                                      </th>
+                                      <th>
+                                        Expired
+                                      </th>
+                                      <th>
+                                        Nama Pemesan
+                                      </th>
+                                      
+                                      <th>
+                                        Qty
+                                      </th>
+                                      <th>
+                                        Berat
+                                      </th>
+                                      <th>
+                                        Ongkir
+                                      </th>
+                                      <th>
+                                        Subtotal
+                                      </th>
+                                      <th>
+                                        Status
+                                      </th>
+                                      <th>
+                                        Aksi
+                                      </th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                
+                              </tbody>
+                          </table>
+                      </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        
       </div><!-- card-body -->
     </div>
 

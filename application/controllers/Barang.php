@@ -286,6 +286,7 @@ class Barang extends CI_Controller {
       $data['main'] = 'barang/create';
       $data['js'] = 'script/barang-create';
       $data['mode'] = "new";
+      $data['modal'] = 'modal/barang';
       $this->load->view('dashboard',$data,FALSE); 
     }else{
       redirect('login');

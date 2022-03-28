@@ -18,12 +18,12 @@
       <div class="d-md-flex justify-content-between flex-row-reverse">
         <h1 class="mg-b-0 tx-uppercase tx-gray-400 tx-mont tx-bold">Invoice</h1>
         <div class="mg-t-25 mg-md-t-0">
-          <h6 class="tx-primary">Prastika Collection</h6>
+          <h6 class="tx-primary">Oviie Qalesya Boutique</h6>
           <p class="lh-7">
-            Jln. Rawa Situ Cibereum Kp.Pekopen Selatan RT.03/05 <br>
-            Kel.Lambang Jaya Kec.Tambun Selatan Kab.Bekasi 17510<br>
-            Tel No: 0856-0364-1272<br>
-          Email: prastikaadnan3@gmail.com</p>
+            Perum Grand Cikarang City <br>
+            Jl Arjuna 63 Blok G.56 No.17<br>
+            Bekasi, Jawa Barat<br>
+          HP: 08996994000</p>
         </div>
       </div>
 
@@ -86,6 +86,9 @@
                   <label class="tx-uppercase tx-13 tx-bold mg-b-10">Catatan</label>
                   <p class="tx-13">Ini adalah bukti sah transaksi anda. </p>
                 </div>
+                <div class="mg-r-20">
+                  <div style="font-size: 30px;font-weight: bold;"><?= $header['status'] ?></div>
+                </div>
               </td>
               <td class="tx-right">SubTotal</td>
               <td colspan="2" class="tx-right"><?= number_format($header['total'] - $header['ongkir'] - $header['rand']) ?></td>
@@ -100,15 +103,32 @@
             </tr>
             <tr>
               <td class="tx-right tx-uppercase tx-bold tx-inverse">Total</td>
-              <td colspan="2" class="tx-right"><h4 class="tx-primary tx-bold tx-lato"><?= number_format($header['total']) ?></h4></td>
+              <td colspan="2" class="tx-right"><h4 class="tx-primary tx-bold tx-lato"><?= number_format($header['total']) ?></h4>
+                <input type="hidden" id="txt-total" value="<?= $header['total'] ?>">
+                <input type="hidden" id="id_invoice" value="<?= $header['id'] ?>">
+                <input type="hidden" id="no_invoice" value="<?= $header['kode_inv'] ?>">
+
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <hr class="mg-b-60">
-
-      <a href="<?= base_url() ?>cetak?p=invoice&id=<?= $header['kode_inv'] ?>" target="_blank" class="btn btn-primary btn-block">Cetak</a>
+      <div class="row">
+        <div class="col-md-6">
+          <a href="javascript::void(0)" id="btnUbah" class="btn btn-warning btn-block">Ubah Status Dibayar</a>
+        </div>
+        <div class="col-md-6">
+          <a href="javascript:void(0)" id="btnCancel" class="btn btn-danger btn-block">Cancel</a>
+        </div>
+        <div class="col-md-6">
+          <a href="<?= base_url() ?>order/listinv" id="btnback" class="btn btn-success btn-block"><< Kembali</a>
+        </div>
+        <div class="col-md-6">
+          <a href="<?= base_url() ?>cetak?p=invoice&id=<?= $header['kode_inv'] ?>" target="_blank" class="btn btn-primary btn-block"><span class="fa fa-print"></span>&nbsp;Cetak</a>
+        </div>
+      </div>
     </div>
   </div>
 

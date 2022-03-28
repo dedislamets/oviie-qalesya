@@ -17,6 +17,7 @@ class Pesan extends CI_Controller {
 
 			$data['title'] = 'Whatsapp Pending';
 			$data['main'] = 'pesan/index';
+      $data['modal'] = 'modal/wa';
 			$data['js'] = 'script/pesan';
 			$this->load->view('dashboard',$data,FALSE); 
 
@@ -57,12 +58,14 @@ class Pesan extends CI_Controller {
           1=>'no_hp',
           2=>'pesan',
           3=>'created',
+          4=>'sent',
       );
       $valid_sort = array(
           0=>'id',
           1=>'no_hp',
           2=>'pesan',
           3=>'created',
+          4=>'sent',
       );
       if(!isset($valid_sort[$col]))
       {
@@ -95,7 +98,7 @@ class Pesan extends CI_Controller {
       }
       $this->db->limit($length,$start);
       $this->db->from("job_pesan");
-      $this->db->where("sent",0);
+      // $this->db->where("sent",0);
       $pengguna = $this->db->get();
       $data = array();
       foreach($pengguna->result() as $r)
@@ -104,7 +107,9 @@ class Pesan extends CI_Controller {
           $data[] = array( 
                       $r->id,
                       $r->no_hp,
-                      '<a href="#">Lihat Pesan</a>',
+                      '<a href="#" data-id="'. $r->id .'" onclick="lihatpesan(this)">Lihat Pesan</a>',
+                      $r->sent,
+                      $r->created,
                       $r->created,
                  );
       }
@@ -140,13 +145,17 @@ class Pesan extends CI_Controller {
           }                 
       }
       $this->db->from("job_pesan");
-      $this->db->where("sent",0);
+      // $this->db->where("sent",0);
       $query = $this->db->get();
     	$result = $query->row();
     	if(isset($result)) return $result->num;
     	return 0;
   }
 
-   
+  public function wa()
+  {
+      $data = $this->admin->get_row("job_pesan" ,array('id' => $this->input->get('id',true) ));
+      $this->output->set_content_type('application/json')->set_output(json_encode($data));
+  }
     
 }

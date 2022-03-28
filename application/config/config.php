@@ -458,6 +458,8 @@ $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = FALSE;
 $config['csrf_exclude_uris'] = array(
         'order/kurir',
+        'order/kirim',
+        'roleusers/add',
         'api/title/[a-z]+'
 );
 

@@ -15,6 +15,57 @@
 
 	    });
 
+	    oTableDeposit = $('#InvoiceListDeposit').DataTable({
+			dom: 'frtip',
+			ajax: {		            
+	            "url": "<?= base_url() ?>order/dataTableDeposit",
+	            "type": "GET"
+	        },
+	        processing	: true,
+			serverSide	: true,			
+			"bPaginate": true,	
+			"autoWidth": true,
+
+	    });
+	    oTableDeposit = $('#InvoiceListPaid').DataTable({
+			dom: 'frtip',
+			ajax: {		            
+	            "url": "<?= base_url() ?>order/dataTablePaid",
+	            "type": "GET"
+	        },
+	        processing	: true,
+			serverSide	: true,			
+			"bPaginate": true,	
+			"autoWidth": true,
+
+	    });
+
+	    oTableDelivery = $('#InvoiceListDelivery').DataTable({
+			dom: 'frtip',
+			ajax: {		            
+	            "url": "<?= base_url() ?>order/dataTableDelivery",
+	            "type": "GET"
+	        },
+	        processing	: true,
+			serverSide	: true,			
+			"bPaginate": true,	
+			"autoWidth": true,
+
+	    });
+
+	    oTableCancel = $('#InvoiceListCancel').DataTable({
+			dom: 'frtip',
+			ajax: {		            
+	            "url": "<?= base_url() ?>order/dataTableCancel",
+	            "type": "GET"
+	        },
+	        processing	: true,
+			serverSide	: true,			
+			"bPaginate": true,	
+			"autoWidth": true,
+
+	    });
+
 		
 	})
 
@@ -28,4 +79,5 @@
 		
 		}
 	}
+	
 </script>

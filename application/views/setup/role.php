@@ -58,7 +58,7 @@
 
                                                 <template v-for="menus in menu_selected">
                                                     <div class="col-xl-6 mb-1">
-                                                        <button class="btn btn-mini btn-inverse btn-square btn-block btnMenuPilih" :data-id="menus.id_group_menu"  @click="loadPermission(menus.id_group_menu, menus.menu)" >{{ menus.menu }}</button>
+                                                        <button class="btn btn-mini btn-warning btn-square btn-block btnMenuPilih" :data-id="menus.id_group_menu"  @click="loadPermission(menus.id_group_menu, menus.menu)" >{{ menus.menu }}</button>
                                                     </div>
                                                 </template>
                                             </div>

@@ -251,7 +251,7 @@ class Admin extends CI_Model
     function simpan_wa($hp, $msg){
         $data = array(
             'no_hp'      => $hp,
-            'pesan'   => $msg 
+            'pesan'   => nl2br($msg) 
         );
         $this->db->insert('job_pesan', $data);
     }

@@ -32,7 +32,7 @@
                                             foreach($group_role as $row)
                                             { ?>
                                                 <p>
-                                                    <button class="btn btn-out-dashed btn-inverse btn-square btn-block btnGroup" data-id="<?php echo $row->id ?>" ><?php echo $row->group ?></button>
+                                                    <button class="btn btn-out-dashed btn-warning btn-square btn-block btnGroup" data-id="<?php echo $row->id ?>" ><?php echo $row->group ?></button>
                                                 </p>
                                             <?php }?>
                                             </div>
@@ -87,6 +87,3 @@
         </div>
     </div>
 </div>
-<?php
-  $this->load->view($modal); 
-?>

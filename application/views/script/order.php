@@ -30,11 +30,15 @@
 	    data: {
 	      id: '', 
 	      list_rekap: [],
-		  tanggal:''
+		  tanggal:'',
+		  member:''
 	    },
 	    methods: {
 	
 	      ganti(event){
+	    	this.loadRekap();
+	      },
+	      cari(event){
 	    	this.loadRekap();
 	      },
 	      saveData(id_posting, id_member, kurir, admin){
@@ -76,12 +80,34 @@
 	        	}
 	        });
           },
+          
+          onDelete(event, id){
+          	Swal.fire({
+			  title: 'Yakin menghapus item ini?',
+			  showCancelButton: true,
+			  confirmButtonText: 'Yakin',
+			}).then((result) => {
+			  if (result.isConfirmed) {
+
+		        axios.get("<?= base_url()?>order/removeitm/", {params: { id_rekap: id }})
+		        .then(response => {
+			    	Swal.fire('Saved!', '', 'success')
+			    	window.location.reload();
+		        });
+
+			  } else if (result.isDenied) {
+			    Swal.fire('Changes are not saved', '', 'info')
+			  }
+			})
+          },
 	      async loadRekap(){
 	        var that = this;
+	        var sParam = {};
 	        if(that.tanggal != "") {
-	        	var sParam = { tgl : that.tanggal };
-	        }else{
-	        	var sParam = {};
+	        	sParam['tgl'] = that.tanggal;
+	        }
+	        if(that.member != "") {
+	        	sParam['member']= that.member;
 	        }
 	        try {
 	          await axios.get('<?= base_url()?>order/list', { params: sParam })
@@ -107,4 +133,42 @@
 	    }
 	});
 
+
+	$('#btnUbah').on('click', function (event) {
+        $('#modalUbah').modal({backdrop: 'static', keyboard: false}) ;
+        $("#total").val($("#txt-total").val());
+        $("#id_inv").val($("#id_invoice").val());
+        $("#no_inv").val($("#no_invoice").val());
+        $("#dibayar").val($("#txt-total").val());
+        $('#dibayar').focus();
+    });
+
+    $("#btnCancel").on('click', function (event) {
+
+      	Swal.fire({
+		  title: 'Yakin mengbatalkan order ini?',
+		  showCancelButton: true,
+		  confirmButtonText: 'Yakin',
+		}).then((result) => {
+		  if (result.isConfirmed) {
+	        axios.get("<?= base_url()?>order/cancel/", {params: { id_inv: $("#id_invoice").val() }})
+	        .then(response => {
+		    	Swal.fire('Saved!', '', 'success')
+		    	window.location.reload();
+	        });
+
+		  } else if (result.isDenied) {
+		    Swal.fire('Changes are not saved', '', 'info')
+		  }
+		})
+          
+    })
+
+    $(document).on('blur', "[id=dibayar]", function(){
+		if($("#total").val() == $("#dibayar").val()){
+			$("#status_bayar").val('Paid');
+		}else{
+			$("#status_bayar").val('Deposit');
+		}
+	});	
 </script>

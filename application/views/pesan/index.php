@@ -18,14 +18,15 @@
           <div class="card-body pd-sm-30">
 
             <div class="table-wrapper">
-              <table id="ViewTable" class="table responsive nowrap">
+              <table id="ViewTable" class="table responsive">
                 <thead>
                   <tr>
                     <th class="wd-15p">ID</th>
                     <th>No WA</th>
                     <th>Pesan</th>
                     <th>Dibuat</th>
-
+                    <th>Kirim</th>
+                    <th>Kirim</th>
                   </tr>
                 </thead>
                 <tbody>
