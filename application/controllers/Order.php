@@ -407,7 +407,8 @@ _Tim Oviie Qalesya Shop Boutique_";
           }                 
       }
       $this->db->limit($length,$start);
-      $this->db->select("invoice.*,members.nama_lengkap");
+      $this->db->select("invoice.*,members.nama_lengkap,TIMESTAMPDIFF(DAY,now(), TIMESTAMP(exp_date)) AS days, 
+        MOD(TIMESTAMPDIFF(HOUR,  NOW(), TIMESTAMP(exp_date)), 24) AS hours, MOD(TIMESTAMPDIFF(MINUTE,NOW() ,TIMESTAMP(exp_date)), 60) AS minutes");
       $this->db->from("invoice");
       $this->db->join("members","members.kode_member=invoice.id_member");
       $this->db->where("status",'Billing');
@@ -419,7 +420,7 @@ _Tim Oviie Qalesya Shop Boutique_";
           $data[] = array( 
                       $r->kode_inv,
                       $r->tgl_invoice,
-                      $r->exp_date,
+                      $r->days ." Hari ". $r->hours ." Jam ". $r->minutes . " Menit",
                       $r->id_member .' - '. $r->nama_lengkap,
                       $r->qty,
                       $r->berat,
@@ -431,6 +432,9 @@ _Tim Oviie Qalesya Shop Boutique_";
                       </a>
                       <button type="button" rel="tooltip" class="btn btn-danger btn-sm " onclick="hapus(this)"  data-id="'.$r->id.'" >
                         <i class="icofont icofont-trash"></i>Hapus
+                      </button>
+                      <button type="button" rel="tooltip" class="btn btn-success btn-sm " onclick="renewal(this)"  data-id="'.$r->id.'" >
+                        <i class="icofont icofont-refresh"></i>Renewal
                       </button>',
                  );
       }
@@ -1105,6 +1109,33 @@ _Tim Oviie Qalesya Shop Boutique_";
     $this->output->set_content_type('application/json')->set_output(json_encode($response)); 
   }
 
+  public function renewal()
+  {
+    $response = [];
+    $response['error'] = TRUE; 
+
+
+    $tgl =date("Y-m-d H:i:s");
+    $exp = date('Y-m-d H:i:s', strtotime($tgl. ' + 1 days'));
+
+    $data = array(
+        'tgl_invoice'   => $tgl ,
+        'exp_date'      => $exp,
+      );
+
+
+    $this->db->set($data);
+    $this->db->where('id', $this->input->get('id',true));
+    $result  =  $this->db->update('invoice'); 
+    if(!$result){
+      print("<pre>".print_r($this->db->error(),true)."</pre>");
+    }else{
+      $response['error']= FALSE;
+    }
+
+    $this->output->set_content_type('application/json')->set_output(json_encode($response)); 
+  }
+
   public function ubahstatus()
   {   
 
@@ -1118,8 +1149,13 @@ _Tim Oviie Qalesya Shop Boutique_";
     //cek validasi
     if ($this->form_validation->run() == TRUE) {
         $dibayar = $this->input->post("dibayar", TRUE);
+        if($dibayar=="0"){
+          $status = "Billing";
+        }else{
+          $status = $this->input->post('status_bayar', true);
+        }
         
-        $this->db->set(array("dibayar" => $dibayar, "status" => $this->input->post('status_bayar', true)));
+        $this->db->set(array("dibayar" => $dibayar, "status" => $status));
         $this->db->where('id', $this->input->post('id_inv',true));
         $result  =  $this->db->update('invoice'); 
         // echo $this->db->last_query(); exit();

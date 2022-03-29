@@ -167,4 +167,23 @@ class Api extends RestController  {
         }
         $this->response($response,200);
     }
+
+    public function cancel_get()
+    {
+        // print("<pre>".print_r($this->post(),true)."</pre>");exit();
+        $response= [];
+        $response['false']=true;
+        $this->db->from("invoice");
+        $this->db->where("MOD(TIMESTAMPDIFF(MINUTE,NOW() ,TIMESTAMP(exp_date)), 60) < 0");
+        $job = $this->db->get()->result_array();
+
+        foreach ($job as $key => $value) {
+            
+            $data['status'] = "Cancel";
+            $this->db->set($data);
+            $this->db->where('id', $value['id']);
+            $result  =  $this->db->update('invoice'); 
+        }
+        $this->response($response,200);
+    }
 }

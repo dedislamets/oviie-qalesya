@@ -79,5 +79,15 @@
 		
 		}
 	}
+	function renewal(val) {
+		var r = confirm("Yakin diperpanjang?");
+		if (r == true) {
+			
+			$.get('<?= base_url() ?>order/renewal', { id: $(val).data('id') }, function(data){ 
+				window.location.reload();
+			})
+		
+		}
+	}
 	
 </script>
