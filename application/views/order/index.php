@@ -42,11 +42,11 @@
                 <table id="ViewTable" class="table">
                     <thead class="text-primary">
                         <tr>
-                            <th style="width: 100px">
-                              ID Posting
+                            <th>
+                              Tanggal
                             </th>
-                            <th style="width: 190px;">
-                              Tgl Order
+                            <th >
+                              Jam
                             </th>
                             <th>
                               Nama Pemesan
@@ -77,8 +77,8 @@
                     <tbody>
                         <template v-for="(log, index) in list_rekap">
                             <tr>
-                                <td>{{log.id_posting}}</td>
-                                <td>{{log.tgl_order}}</td>
+                                <td>{{ moment(log.tgl_order).lang('id').format("Do MMMM YYYY")}}</td>
+                                <td>{{log.jam}}</td>
                                 <td>{{log.id_member}} - {{log.nama_lengkap}}</td>
                                 <td>{{log.qty}}</td>
                                 <td>{{log.berat}}</td>
@@ -105,7 +105,7 @@
                             </tr>
                             <tr>
                                 <td></td>
-                                <td style='font-weight:bold;background-color: #f7f7f7;'>Kode Order</td>
+                                <td style='font-weight:bold;background-color: #f7f7f7;'>ID Posting</td>
                                 <td style='font-weight:bold;background-color: #f7f7f7;'>Barang</td>
                                 <td style='font-weight:bold;background-color: #f7f7f7;'>Qty</td>
                                 <td style='font-weight:bold;background-color: #f7f7f7;'>Berat</td>
@@ -114,7 +114,7 @@
                             </tr>
                             <tr v-for="(row, i) in log.detail">
                                 <td></td>
-                                <td>{{row.kode_order}}</td>
+                                <td>{{row.id_posting}}</td>
                                 <td>{{row.nama_barang}}</td>
                                 <td>{{row.qty}}</td>
                                 <td>{{row.berat}}</td>

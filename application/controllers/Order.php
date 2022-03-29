@@ -144,12 +144,12 @@ class Order extends CI_Controller {
   public function list()
   {
     
-    $this->db->select("rekapan.id_posting,MAX(order_date) tgl_order,rekapan.id_member,nama_lengkap,SUM(rekapan.qty) AS qty, SUM(rekapan.total) Total , SUM(rekapan.qty*barang.berat) AS berat");
+    $this->db->select("rekapan.id_posting,date(order_date) as tgl_order, DATE_FORMAT(order_date,'%H:%i:%s') jam,rekapan.id_member,nama_lengkap,SUM(rekapan.qty) AS qty, SUM(rekapan.total) Total , SUM(rekapan.qty*barang.berat) AS berat");
     $this->db->from("rekapan");
     $this->db->join("barang","barang.kode_barang=rekapan.kode_product");
     $this->db->join("members","members.kode_member=rekapan.id_member");
     $this->db->join("invoice","members.kode_member=invoice.id_member and invoice.id_posting=rekapan.id_posting","left");
-    $this->db->group_by('rekapan.id_posting,rekapan.id_member,nama_lengkap');
+    $this->db->group_by('date(order_date),rekapan.id_member,nama_lengkap');
     $this->db->where('kirim is null');
     $this->db->where("rekapan.status <> 'Cancel'");
     if(!empty($this->input->get("tgl",true))){
@@ -168,11 +168,11 @@ class Order extends CI_Controller {
       $data['rekapan'][$key]['ongkir'] = 0;
       $data['rekapan'][$key]['kurir'] = '';
       $data['rekapan'][$key]['admin'] = '';
-      $this->db->select("rekapan.id,kode_order,kode_barang,nama_barang,qty,berat,harga");
+      $this->db->select("rekapan.id,rekapan.id_posting,kode_order,kode_barang,nama_barang,qty,berat,harga");
       $this->db->from("rekapan");
       $this->db->join("barang","barang.kode_barang=rekapan.kode_product");
       $this->db->where(
-        array("id_posting" => $value['id_posting'], 
+        array("DATE(order_date)" => $value['tgl_order'], 
               "id_member" => $value['id_member']));
       $this->db->where("rekapan.status <> 'Cancel'");
       $detail = $this->db->get()->result_array();

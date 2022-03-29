@@ -352,11 +352,13 @@
     <script src="<?= base_url() ?>assets/main/lib/datatables/jquery.dataTables.js"></script>
     <script src="<?= base_url() ?>assets/main/lib/datatables-responsive/dataTables.responsive.js"></script>
     <script src="<?= base_url(); ?>assets/js/plugins/jquery.validate.min.js"></script>
+    <script src="<?= base_url(); ?>assets/js/moment-with-locales.min.js"></script>
     <script src="<?= base_url(); ?>assets/bower_components/jstree/js/jstree.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- <script src="<?= base_url() ?>assets/js/components/ui-modal.js"></script> -->
     <script type="text/javascript">
+        moment.locale('id');
         function alertOK(href="") {
          Swal.fire({ title: "Berhasil disimpan..!",
              text: "",
