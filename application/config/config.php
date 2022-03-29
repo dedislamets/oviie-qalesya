@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+date_default_timezone_set("Asia/Jakarta");
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -25,9 +25,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 // $config['base_url'] = 'http://localhost/oviieqalesyashop/';
 $config['base_url'] = 'https://oviieqalesyashopboutique.com/';
-
-// $config['base_url'] = 'https://www.wmlogistics.id/';
-
 
 /*
 |--------------------------------------------------------------------------
