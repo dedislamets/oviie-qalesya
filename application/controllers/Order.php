@@ -440,8 +440,8 @@ _Tim Oviie Qalesya Shop Boutique_";
                       $r->qty,
                       $r->berat,
                       number_format($r->ongkir),
+                      ucwords($r->kurir) ,
                       number_format($r->total),
-                      $r->kurir,
                       $r->status,
                       '<a href="'. base_url() .'order/invoice/'. $r->kode_inv .'" class="btn btn-warning btn-sm " >
                         <i class="icofont icofont-ui-edit"></i>Detail
