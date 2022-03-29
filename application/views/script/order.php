@@ -142,7 +142,7 @@
         $("#total").val($("#txt-total").val());
         $("#id_inv").val($("#id_invoice").val());
         $("#no_inv").val($("#no_invoice").val());
-        $("#dibayar").val($("#txt-total").val());
+        $("#dibayar").val(0);
         $('#dibayar').focus();
     });
 

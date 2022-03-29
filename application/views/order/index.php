@@ -88,7 +88,8 @@
                                     <select :name="'kurir_' + log.id_member" @change="onChange($event,log.id_posting, log.id_member)" v-model="log.kurir">
                                         <option value="">Pilih</option>
                                         <option value="ide">IDE</option>
-                                        <option value="lion">LION</option>    
+                                        <option value="lion">LION</option>  
+                                        <option value="cod">COD</option>    
                                     </select>
                                 </td>
                                 <td>

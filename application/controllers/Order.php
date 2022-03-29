@@ -198,18 +198,28 @@ class Order extends CI_Controller {
       $rekap = $this->db->get()->row_array();
 
       $member = $this->admin->get_array('members',array( 'kode_member' => $rekap['id_member']));
-      $results_ongkir = $this->admin->cek_ongkir('746',$member['kec_id'],floatval($rekap['berat']), $jsonArray['kurir']);
-        // print("<pre>".print_r($results_ongkir,true)."</pre>");exit();
-      if(empty($results_ongkir['costs'])){
-        $response['error']= true;
-        $response['msg']= 'Ongkir tidak ditemukan.!!';
-      }else{
-        $ongkir = $results_ongkir['costs'][0]['cost'][0]['value'];
+
+      if($jsonArray['kurir'] == 'cod'){
+        $ongkir = 0;
 
         $response['error']= FALSE;
         $response['ongkir']= $ongkir;
         $response['kurir']= $jsonArray['kurir'];
+      }else{
+        $results_ongkir = $this->admin->cek_ongkir('746',$member['kec_id'],floatval($rekap['berat']), $jsonArray['kurir']);
+        // print("<pre>".print_r($results_ongkir,true)."</pre>");exit();
+        if(empty($results_ongkir['costs'])){
+          $response['error']= true;
+          $response['msg']= 'Ongkir tidak ditemukan.!!';
+        }else{
+          $ongkir = $results_ongkir['costs'][0]['cost'][0]['value'];
+
+          $response['error']= FALSE;
+          $response['ongkir']= $ongkir;
+          $response['kurir']= $jsonArray['kurir'];
+        }
       }
+      
       
 
     } catch (Exception $e) {
