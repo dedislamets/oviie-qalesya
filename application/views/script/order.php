@@ -115,9 +115,12 @@
 	          	// debugger;
 	            that.list_rekap = response.data.rekapan;
 
-	            let alphabet = "abcdefghijklm".split('');
+	            let alphabet1 = "abcdefgh".split('');
+	            let alphabet2 = "ijklmnop".split('');
     			for (let val of that.list_rekap) {
-	    			if(alphabet.includes(val.nama_lengkap.charAt(0)) ){
+	    			if(alphabet1.includes(val.nama_lengkap.toLowerCase().charAt(0)) ){
+	    				val.admin = '08991994000';
+	    			}else if( alphabet2.includes(val.nama_lengkap.toLowerCase().charAt(0)) ){
 	    				val.admin = '08992994000';
 	    			}else{
 	    				val.admin = '08993994000';

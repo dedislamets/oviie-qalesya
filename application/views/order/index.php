@@ -94,6 +94,7 @@
                                 <td>
                                     <select :name="'admin_' + log.id_member" v-model="log.admin">
                                         <option value="">Pilih</option>
+                                        <option value="08991994000">Admin 1</option>
                                         <option value="08992994000">Admin 2</option>
                                         <option value="08993994000">Admin 3</option>  
                                     </select>
