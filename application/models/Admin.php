@@ -257,13 +257,7 @@ class Admin extends CI_Model
     }
     function kirim_wa($hp,$msg){
         $fields = array(
-            //hp dedi
-            //'token' => 'ZaT2RwUa1UxucRF9tp99VaDrGm1Je8bw1iDsJXfDeBYY1GnXTY',
-            //ini hp prastika 
-            'token' => '3dzJEWidkwjwNYjo6LyoyQh53TqckT3QE14HxiGmthwV1N9Brt', 
-            //'token' => 'Fg97TQRRZ1cUk7vZhHHyEf2FsQgnmNoLRjaRpquDtyAHFu21km',
-            //hp redmi 8
-            //'token' => '5pCW3hv3WG1uWfRVQn4oqnNX84uURykBK1gzAZ4zvX8cjttm5e',
+            'token' => 'VF6NHu9eCx6aWzR2T9pJYuCCsb2Dy5mxp5SoT6oPt6QoZQhkru', 
             'number' => $hp,
             'message' => $msg,
             'date' => date("Y-m-d"),
