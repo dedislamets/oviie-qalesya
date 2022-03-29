@@ -137,25 +137,34 @@ class Api extends RestController  {
         
     }
 
-    public function absen_post()
+
+    public function wa_get()
     {
-        $data =array(
-            "RecnumEmployee"=>$this->post('id'),
-            "FingerId"=>$this->post('fid'),
-            "FingerDate"=>$this->post('tgl_absen'),
-            "FingerTime"=>$this->post('jam'),
-            "FingerCode"=>$this->post('fc'),
-            "Type"=> 2,
-            "Latitude"=>$this->post('lat'),
-            "Longitude"=>$this->post('lng'),
-            "Photo"=>$this->post('foto'),
-            "LocationDistance"=>$this->post('jarak')
-        );
+        // print("<pre>".print_r($this->post(),true)."</pre>");exit();
+        $response= [];
+        $response['false']=true;
+        // if(empty($this->post('pesan', true))){
+        //     $response['error']=true;
+        //     $response['msg'][]= "Tidak ada pesan dikirim";
+        // }
+        // if(empty($this->post('hp', true))){
+        //     $response['error']=true;
+        //     $response['msg'][]= "Tidak ada nomor hp dikirim";
+        // }
+        $this->db->from("job_pesan");
+        $this->db->where("sent",0);
+        $this->db->order_by("created ASC");
+        $this->db->limit(5);
+        $job = $this->db->get()->result_array();
 
-        $response = $this->admin->api_post("DataSlide", $data);
-
-        $query = $this->db->query("[Sp_ProcessDailyPerEmployee] ". $this->post('id') .",'" . $this->post('tgl_absen') ."',0," . $this->post('id') )->result();
-
-        $this->response($response);
+        foreach ($job as $key => $value) {
+            $sent = $this->admin->kirim_wa($value['no_hp'],$value['pesan']);
+            $response['sent'][]= $value['no_hp'] . " - ". $value['pesan'];
+            $data['sent'] = 1;
+            $this->db->set($data);
+            $this->db->where('id', $value['id']);
+            $result  =  $this->db->update('job_pesan'); 
+        }
+        $this->response($response,200);
     }
 }
