@@ -259,7 +259,7 @@ class Admin extends CI_Model
         $fields = array(
             'token' => 'VF6NHu9eCx6aWzR2T9pJYuCCsb2Dy5mxp5SoT6oPt6QoZQhkru', 
             'number' => $hp,
-            'message' => $msg,
+            'message' => str_replace("<br />", "", $msg),
             'date' => date("Y-m-d"),
             'time' => date("H:i:s")
         );
