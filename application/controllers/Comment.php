@@ -18,6 +18,7 @@ class Comment extends CI_Controller {
             $data['title'] = 'Home';
             $data['main'] = 'dashboard/comment';
 			$data['js'] = 'script/comment';
+			$data['modal'] = 'modal/none';
 			$config = $this->admin->get_array('tb_setting');
 			$data['config'] = $config;
 
