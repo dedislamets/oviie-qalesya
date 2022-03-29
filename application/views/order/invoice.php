@@ -18,7 +18,7 @@
       <div class="d-md-flex justify-content-between flex-row-reverse">
         <h1 class="mg-b-0 tx-uppercase tx-gray-400 tx-mont tx-bold">Invoice</h1>
         <div class="mg-t-25 mg-md-t-0">
-          <h6 class="tx-primary">Oviie Qalesya Boutique</h6>
+          <h6 class="tx-primary">Oviie Qalesyashop Boutique</h6>
           <p class="lh-7">
             Perum Grand Cikarang City <br>
             Jl Arjuna 63 Blok G.56 No.17<br>

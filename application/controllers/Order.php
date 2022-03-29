@@ -257,6 +257,9 @@ class Order extends CI_Controller {
     $results_ongkir = $this->admin->cek_ongkir('746',$member['kec_id'],floatval($rekap['berat']), $jsonArray['kurir']);
       // print("<pre>".print_r($results_ongkir,true)."</pre>");exit();
     $ongkir = $results_ongkir['costs'][0]['cost'][0]['value'];
+    if($jsonArray['kurir'] == 'cod'){
+      $ongkir = 0;
+    }
     $tgl =date("Y-m-d H:i:s");
     $exp = date('Y-m-d H:i:s', strtotime($tgl. ' + 1 days'));
     $data = array(
@@ -374,7 +377,8 @@ _Tim Oviie Qalesya Shop Boutique_";
           5=>'berat',
           6 => 'total',
           7 => 'ongkir',
-          8 => 'status'
+          8 => 'status',
+          9 => 'kurir'
       );
       $valid_sort = array(
           0=>'kode_inv',
@@ -385,7 +389,8 @@ _Tim Oviie Qalesya Shop Boutique_";
           5=>'berat',
           6 => 'total',
           7 => 'ongkir',
-          8 => 'status'
+          8 => 'status',
+          9 => 'kurir'
       );
       if(!isset($valid_sort[$col]))
       {
@@ -436,6 +441,7 @@ _Tim Oviie Qalesya Shop Boutique_";
                       $r->berat,
                       number_format($r->ongkir),
                       number_format($r->total),
+                      $r->cod,
                       $r->status,
                       '<a href="'. base_url() .'order/invoice/'. $r->kode_inv .'" class="btn btn-warning btn-sm " >
                         <i class="icofont icofont-ui-edit"></i>Detail

@@ -67,7 +67,7 @@
                                         Expired
                                       </th>
                                       <th>
-                                        Nama Pemesan
+                                        Pemesan
                                       </th>
                                       
                                       <th>
@@ -78,6 +78,9 @@
                                       </th>
                                       <th>
                                         Ongkir
+                                      </th>
+                                      <th>
+                                        Expedisi
                                       </th>
                                       <th>
                                         Subtotal
