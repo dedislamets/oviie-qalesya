@@ -84,7 +84,7 @@ class Comment extends CI_Controller {
 	        $qty +=(int)$value['qty'];
 	    }
 	    $data['total_qty'] = $qty;
-	    $data['total_rekap'] = $this->db->query("select count(*) as total from rekapan where id_posting='". $id ."'")->row_array();;
+	    $data['total_rekap'] = $this->db->query("select count(*) as total from rekapan where id_posting='". $id ."'")->row_array();
 
 	    // print("<pre>".print_r($data,true)."</pre>");
 	    $this->output->set_content_type('application/json')->set_output(json_encode($data));

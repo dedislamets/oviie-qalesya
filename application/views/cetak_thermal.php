@@ -15,7 +15,7 @@
                 <h1 class="mg-b-0 tx-uppercase tx-gray-400 tx-mont tx-bold">Invoice<br>
                   <span style="font-size: 19px"><?= $header['status'] ?></span></h1>
                 <div class="mg-t-25 mg-md-t-0">
-                  <h6 class="tx-primary">Oviie Qalesya Boutique</h6>
+                  <h6 class="tx-primary">Oviie Qalesyashop Boutique</h6>
                   <p class="lh-7">
                     Perum Grand Cikarang City <br>
                     Jl Arjuna 63 Blok G.56 No.17<br>
@@ -31,7 +31,7 @@
                   <p class="lh-7"><?= $header['alamat'] ?><br>
                     <?= $header['kelurahan'] ?>, <?= $header['kecamatan'] ?>, <?= $header['kota'] ?>, <?= $header['provinsi'] ?><br>
                     <?= $header['nomor_wa'] ?><br>
-                </div><!-- col -->
+                </div>
                 <div class="col-md">
                   <label class="tx-uppercase tx-13 tx-bold mg-b-20">Invoice Information</label>
                   <p class="d-flex justify-content-between mg-b-5">
@@ -39,14 +39,14 @@
                     <span><?= $header['kode_inv'] ?></span>
                   </p>
                   <p class="d-flex justify-content-between mg-b-5">
-                    <span>Posting ID</span>
-                    <span><?= $header['id_posting'] ?></span>
+                    <span>Admin</span>
+                    <span><?= $header['nama_admin'] ?></span>
                   </p>
                   <p class="d-flex justify-content-between mg-b-5">
                     <span>Order Date:</span>
                     <span><?= $header['tgl_invoice'] ?></span>
                   </p>
-                </div><!-- col -->
+                </div>
               </div>
 
               <div class="table-responsive mg-t-40">
@@ -106,7 +106,7 @@
               <hr class="mg-b-60">
             </div>
           </div>
-        <button id="btnPrint" class="hidden-print">Print</button>
+        <!-- <button id="btnPrint" class="hidden-print">Print</button> -->
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
         <script type="text/javascript">
             window.print();

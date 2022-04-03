@@ -5,6 +5,7 @@
 <head>
     <title>Oviie Qalesya</title>
     <link href="<?= base_url() ?>assets/css/application.min.css" rel="stylesheet">
+    <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="<?= base_url() ?>assets/main/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="<?= base_url() ?>assets/main/lib/datatables/jquery.dataTables.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/bower_components/jstree/css/style.min.css">
@@ -33,10 +34,13 @@
       .error {
         color: red;
       }
+      .bold{
+        font-weight: bold;
+      }
     </style>
 </head>
 
-<body class="">
+<body class="" >
     <!-- This is the white navigation bar seen on the top. A bit enhanced BS navbar. See .page-controls in _base.scss. -->
     <nav class="page-controls navbar navbar-dashboard navbar-white">
        
@@ -299,14 +303,11 @@
                   $this->load->view('dashboard/index'); 
               } 
             ?>  
-          </div>
-            <!-- Page content -->
-            
+            <?php
+              $this->load->view($modal); 
+            ?>
 
-            <!-- <footer class="content-footer hidden-print">
-                Flatlogic One Lite - Bootstrap Admin Dashboard Template Made by <a href="https://flatlogic.com/"
-                    rel="nofollow" target="_blank" class="text-dark">Flatlogic</a>
-            </footer> -->
+          </div>
         </main>
     </div>
     <!-- The Loader. Is shown when pjax happens -->
@@ -320,11 +321,13 @@
     <script src="<?= base_url() ?>assets/node_modules/jquery-pjax/jquery.pjax.js"></script>
     <script src="<?= base_url() ?>assets/node_modules/popper.js/dist/umd/popper.js"></script>
     <script src="<?= base_url() ?>assets/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script> -->
     <script src="<?= base_url() ?>assets/node_modules/bootstrap/js/dist/util.js"></script>
     <script src="<?= base_url() ?>assets/node_modules/widgster/widgster.js"></script>
     <script src="<?= base_url() ?>assets/node_modules/hammerjs/hammer.js"></script>
     <script src="<?= base_url() ?>assets/node_modules/jquery-slimscroll/jquery.slimscroll.js"></script>
     <script src="<?= base_url() ?>assets/node_modules/jquery-hammerjs/jquery.hammer.js"></script>
+
 
     <!-- common app js -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -357,10 +360,16 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- <script src="<?= base_url() ?>assets/js/components/ui-modal.js"></script> -->
+    
     <script type="text/javascript">
+        $(document).ready(function(){  
+            $(document).on('show.bs.modal', '.modal', function () {
+              $(this).appendTo('body');
+            });
+        })
         moment.locale('id');
-        function alertOK(href="") {
-         Swal.fire({ title: "Berhasil disimpan..!",
+        function alertOK(href="", text = "Berhasil disimpan..!") {
+         Swal.fire({ title: text,
              text: "",
              timer: 2000,
              icon: 'success',
@@ -384,14 +393,12 @@
     </script>
     <!-- page specific js -->
     <!-- <script src="<?= base_url() ?>assets/js/form/form-elements.js"></script> -->
+    
     <?php
       $this->load->view($js); 
     ?>
-    <?php
-      $this->load->view($modal); 
-    ?>
-
-
+    
+    
 </body>
 
 </html>

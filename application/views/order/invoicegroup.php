@@ -42,8 +42,8 @@
             <span><?= $header['kode_inv'] ?></span>
           </p>
           <p class="d-flex justify-content-between mg-b-5">
-            <span>Posting ID</span>
-            <span>-</span>
+            <span>Admin</span>
+            <span><?= $header['nama_admin'] ?></span>
           </p>
           <p class="d-flex justify-content-between mg-b-5">
             <span>Order Date:</span>
@@ -53,10 +53,13 @@
       </div>
 
       <div class="table-responsive mg-t-40">
+        <a class="btn btn-dark btn-rounded" id="btnAddInv" href="javascript:void(0)"><i class="fa fa-plus"></i>&nbsp; Tambah Invoice</a>
         <table class="table">
           <thead>
             <tr>
-              <th class="wd-20p">Kode</th>
+              <th>#</th>
+              <th class="wd-20p">Kode Inv</th>
+              <th class="wd-20p">Kode Brg</th>
               <th class="wd-40p">Nama Barang</th>
               <th class="tx-center">Qty</th>
               <th class="tx-right">Harga</th>
@@ -67,6 +70,12 @@
             <?php
               foreach ($detail as $key => $value) : ?>
                 <tr>
+                  <td>
+                    <a href='javascript:void(0)' data-id="<?= $value['id'] ?>" data-parent="<?= $value['parent_invoice'] ?>" onclick="hapusinvoice(this)">
+                        <span class="fa fa-trash"></span>
+                    </a>
+                  </td>
+                  <td><?= $value['kode_inv'] ?></td>
                   <td><?= $value['kode_barang'] ?></td>
                   <td class="tx-12"><?= $value['nama_barang'] ?></td>
                   <td class="tx-center"><?= $value['qty'] ?></td>
@@ -81,7 +90,7 @@
             
             
             <tr>
-              <td colspan="2" rowspan="4" class="valign-middle">
+              <td colspan="4" rowspan="4" class="valign-middle">
                 <div class="mg-r-20">
                   <label class="tx-uppercase tx-13 tx-bold mg-b-10">Catatan</label>
                   <p class="tx-13">Ini adalah bukti sah transaksi anda. </p>
@@ -91,19 +100,19 @@
                 </div>
               </td>
               <td class="tx-right">SubTotal</td>
-              <td colspan="2" class="tx-right"><?= number_format($header['total'] - $header['ongkir'] - $header['rand']) ?></td>
+              <td colspan="4" class="tx-right"><?= number_format($header['total'] - $header['ongkir'] - $header['rand']) ?></td>
             </tr>
             <tr>
               <td class="tx-right">Kode Unik</td>
-              <td colspan="2"  class="tx-right"><?= $header['rand'] ?></td>
+              <td colspan="3"  class="tx-right"><?= $header['rand'] ?></td>
             </tr>
             <tr>
               <td class="tx-right">Ongkir</td>
-              <td colspan="2"  class="tx-right"><?= number_format($header['ongkir']) ?></td>
+              <td colspan="3"  class="tx-right"><?= number_format($header['ongkir']) ?></td>
             </tr>
             <tr>
               <td class="tx-right tx-uppercase tx-bold tx-inverse">Total</td>
-              <td colspan="2" class="tx-right"><h4 class="tx-primary tx-bold tx-lato"><?= number_format($header['total']) ?></h4>
+              <td colspan="3" class="tx-right"><h4 class="tx-primary tx-bold tx-lato"><?= number_format($header['total']) ?></h4>
                 <input type="hidden" id="txt-total" value="<?= $header['total'] ?>">
                 <input type="hidden" id="id_invoice" value="<?= $header['id'] ?>">
                 <input type="hidden" id="no_invoice" value="<?= $header['kode_inv'] ?>">
@@ -116,12 +125,7 @@
 
       <hr class="mg-b-60">
       <div class="row">
-        <div class="col-md-6">
-          <a href="javascript::void(0)" id="btnUbah" class="btn btn-warning btn-block">Ubah Status Dibayar</a>
-        </div>
-        <div class="col-md-6">
-          <a href="javascript:void(0)" id="btnCancel" class="btn btn-danger btn-block">Cancel</a>
-        </div>
+     
         <div class="col-md-6">
           <a href="<?= base_url() ?>order/listinv" id="btnback" class="btn btn-success btn-block"><< Kembali</a>
         </div>

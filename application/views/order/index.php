@@ -85,7 +85,7 @@
                                 <td>{{ Number(log.Total).toLocaleString() }}</td>
                                 <td :id="'ong_'+ log.id_member">{{ Number(log.ongkir).toLocaleString() }}</td>
                                 <td>
-                                    <select :name="'kurir_' + log.id_member" @change="onChange($event,log.id_posting, log.id_member)" v-model="log.kurir">
+                                    <select :name="'kurir_' + log.id_member" @change="onChange($event,log.tgl_order, log.id_member)" v-model="log.kurir">
                                         <option value="">Pilih</option>
                                         <option value="ide">IDE</option>
                                         <option value="lion">LION</option>  
@@ -101,7 +101,10 @@
                                     </select>
                                 </td>
                                 <!-- <td><i class='icon ion-checkmark' style='color: green'></i></td> -->
-                                <td><a href='#' class='btn btn-warning btn-sm' @click="saveData(log.id_posting,log.id_member,log.kurir,log.admin)">Kirim WA</a></td>
+                                <td>
+                                    <a href='#' class='btn btn-warning btn-sm' @click="saveData(log.tgl_order,log.id_member,log.kurir,log.admin)">Kirim WA</a>
+                                    <a href='#' class='btn btn-success btn-sm' @click="openModal(log.tgl_order,log.id_member)">Seleksi</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -119,11 +122,11 @@
                                 <td>{{row.qty}}</td>
                                 <td>{{row.berat}}</td>
                                 <td>{{Number(row.harga).toLocaleString()}}</td>
-                                <td>
+                                <!-- <td>
                                     <a href='#' @click="onDelete(event,row.id)">
                                         <span class="fa fa-trash"></span>
                                     </a>
-                                </td>
+                                </td> -->
                             </tr>
                         </template>
                         
@@ -133,6 +136,6 @@
 
       </div><!-- card-body -->
     </div>
-
+ 
 </div>
 

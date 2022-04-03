@@ -1,17 +1,17 @@
 <?php
-ini_set('memory_limit','512M'); 
-ini_set('sqlsrv.ClientBufferMaxKBSize','524288');
-ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288');
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once APPPATH . 'third_party/spout-2.7.2/src/Spout/Autoloader/autoload.php';
-use Box\Spout\Writer\WriterFactory;
-use Box\Spout\Common\Type;
-use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
+ini_set('memory_limit','2048M'); 
+ini_set('max_execution_time', 0); 
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+require_once APPPATH.'/third_party/spout/Autoloader/autoload.php';
+use Box\Spout\Reader\ReaderFactory;
+use Box\Spout\Writer\WriterFactory;
+use Box\Spout\Common\Type;
 
 class Members extends CI_Controller {
 	public function __construct()
@@ -29,7 +29,7 @@ class Members extends CI_Controller {
 			$data['title'] = 'Members';
 			$data['main'] = 'users/members';
 			$data['js'] = 'script/members';
-			$data['modal'] = 'modal/users';
+			$data['modal'] = 'modal/member';
       $data['group'] = $this->admin->getmaster('tb_group_role');
 			$this->load->view('dashboard',$data,FALSE); 
 
@@ -304,165 +304,323 @@ class Members extends CI_Controller {
       return 0;
     }
 
-    public function export()
-    {
+  public function template()
+  {
+      
+    $data = $this->db->query("SELECT DISTINCT kelurahan,kecamatan,kota,province FROM master_city ")->result();
+    $writer = WriterFactory::create(Type::XLSX);
+
+    $writer->openToBrowser("Data Members.xlsx");
+
+    $sheet = $writer->getCurrentSheet();
+    $sheet->setName('Member');
+
+    $header = [
+        'Email',
+        'Nomor WA',
+        'Nama Lengkap',
+        "Nama Facebook",
+        'Alamat Lengkap',
+        'Kelurahan',
+        'Kecamatan',
+        'Kota',
+        'Provinsi'
+    ];
+    $writer->addRow($header);
+
+    $sheet = $writer->addNewSheetAndMakeItCurrent();
+    $sheet->setName('Wilayah');
+
+    $header = [
+        'No',
+        'Kelurahan',
+        'Kecamatan',
+        "Kota",
+        'Provinsi'
+    ];
+    $writer->addRow($header);
+
+    $data_excel   = array(); 
+    $no     = 1;
+
+    foreach ($data as $key) {
+        $anggota = array(
+            $no++,
+            $key->kelurahan,
+            $key->kecamatan,
+            $key->kota,
+            $key->province
+        );
+
+        array_push($data_excel, $anggota); 
+    }
+
+    $writer->addRows($data_excel);
+
+    $writer->close();
+  }
+
+  public function export()
+  {
+    $this->db->from("members");
+    
+    $data = $this->db->get()->result();
+
+    $writer = WriterFactory::create(Type::XLSX);
+
+    $writer->openToBrowser("Data Members.xlsx");
+
+    $sheet = $writer->getCurrentSheet();
+    $sheet->setName('Rekap');
+
+    $header = [
+        'No',
+        'KODE',
+        'NAMA LENGKAP',
+        "FACEBOOK",
+        'NO WA',
+        'Kelurahan',
+        'Kecamatan',
+        'Kota',
+        'Provinsi',
+        'Admin',
+    ];
+    $writer->addRow($header);
+
+    $data_excel   = array(); 
+    $no     = 1;
+
+    foreach ($data as $key) {
+        $anggota = array(
+            $no++,
+            $key->kode_member,
+            $key->nama_lengkap,
+            $key->nama_facebook,
+            $key->nomor_wa,
+            $key->kelurahan,
+            $key->kecamatan,
+            $key->kota,
+            $key->provinsi,
+            '',
+        );
+
+        array_push($data_excel, $anggota); 
+    }
+
+    $writer->addRows($data_excel);
+
+    $writer->close(); 
+  }
+
+  public function export_lama()
+  {
+
       $this->db->from("members");
+      $this->db->limit(1000);
       
       $data = $this->db->get()->result();
 
-      $writer = WriterFactory::create(Type::XLSX);
+      $spreadsheet = new Spreadsheet;
 
-      $writer->openToBrowser("Data Members.xlsx");
+      $styleArray = array(
+          'borders' => array(
+              'outline' => array(
+                  'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                  'color' => array('argb' => '000000'),
+              ),
+          ),
+      );
 
-      $sheet = $writer->getCurrentSheet();
-      $sheet->setName('Rekap');
+      $spreadsheet->setActiveSheetIndex(0)
+        ->setCellValue('A1', 'NO')
+        ->setCellValue('B1', 'Kode Member')
+        ->setCellValue('C1', 'Nomor WA')
+        ->setCellValue('D1', 'Nama Lengkap')
+        ->setCellValue('E1', 'Facebook')
+        ->setCellValue('F1', 'Kelurahan')
+        ->setCellValue('G1', 'Kecamatan')
+        ->setCellValue('H1', 'Kota')
+        ->setCellValue('I1', 'Provinsi');
 
-      $header = [
-          'No',
-          'KODE',
-          'NAMA LENGKAP',
-          "FACEBOOK",
-          'NO WA',
-          'Kelurahan',
-          'Kecamatan',
-          'Kota',
-          'Provinsi',
-          'Admin',
-      ];
-      $writer->addRow($header);
+      $spreadsheet->getActiveSheet()->getStyle('A1:I1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f4f403');
 
-      $data_excel   = array(); 
-      $no     = 1;
+      $spreadsheet->getActiveSheet()->setTitle('Members');
 
-      foreach ($data as $key) {
-          $anggota = array(
-              $no++,
-              $key->kode_member,
-              $key->nama_lengkap,
-              $key->nama_facebook,
-              $key->nomor_wa,
-              $key->kelurahan,
-              $key->kecamatan,
-              $key->kota,
-              $key->provinsi,
-              '',
-          );
-
-          array_push($data_excel, $anggota); 
-      }
-
-      $writer->addRows($data_excel);
-
-      $writer->close(); 
-    }
-
-    public function export_lama()
-    {
-
-        $this->db->from("members");
-        $this->db->limit(1000);
-        
-        $data = $this->db->get()->result();
-
-        $spreadsheet = new Spreadsheet;
-
-        $styleArray = array(
-            'borders' => array(
-                'outline' => array(
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                    'color' => array('argb' => '000000'),
-                ),
-            ),
-        );
+      $i=2; 
+      foreach($data as $key=>$row) {
 
         $spreadsheet->setActiveSheetIndex(0)
-          ->setCellValue('A1', 'NO')
-          ->setCellValue('B1', 'Kode Member')
-          ->setCellValue('C1', 'Nomor WA')
-          ->setCellValue('D1', 'Nama Lengkap')
-          ->setCellValue('E1', 'Facebook')
-          ->setCellValue('F1', 'Kelurahan')
-          ->setCellValue('G1', 'Kecamatan')
-          ->setCellValue('H1', 'Kota')
-          ->setCellValue('I1', 'Provinsi');
+          ->setCellValue('A'.$i, $key+1)
+          ->setCellValue('B'.$i, $row->kode_member)
+          ->setCellValue('C'.$i, $row->nomor_wa)
+          ->setCellValue('D'.$i, $row->nama_lengkap)
+          ->setCellValue('E'.$i, $row->nama_facebook)
+          ->setCellValue('F'.$i, $row->kelurahan)
+          ->setCellValue('G'.$i, $row->kecamatan)
+          ->setCellValue('H'.$i, $row->provinsi)
+          ->setCellValue('I'.$i, $row->kota);
 
-        $spreadsheet->getActiveSheet()->getStyle('A1:I1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f4f403');
-
-        $spreadsheet->getActiveSheet()->setTitle('Members');
-
-        $i=2; 
-        foreach($data as $key=>$row) {
-
-          $spreadsheet->setActiveSheetIndex(0)
-            ->setCellValue('A'.$i, $key+1)
-            ->setCellValue('B'.$i, $row->kode_member)
-            ->setCellValue('C'.$i, $row->nomor_wa)
-            ->setCellValue('D'.$i, $row->nama_lengkap)
-            ->setCellValue('E'.$i, $row->nama_facebook)
-            ->setCellValue('F'.$i, $row->kelurahan)
-            ->setCellValue('G'.$i, $row->kecamatan)
-            ->setCellValue('H'.$i, $row->provinsi)
-            ->setCellValue('I'.$i, $row->kota);
-
-            $spreadsheet->getActiveSheet()->getStyle('A2:I'.$i)->applyFromArray($styleArray);
-          $i++;
-        }
-
-
-        foreach (range('A','I') as $col) {
-          $spreadsheet->getActiveSheet()->getColumnDimension($col)->setAutoSize(true);  
-        }
-
-       
-        // exit();
-        $writer = new Xlsx($spreadsheet);
-
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="Data Member.xlsx"');
-        header('Cache-Control: max-age=0');
-
-        $writer->save('php://output');
-    }
-    function Acak($varMsg,$strKey) {
-      try {
-          $Msg = $varMsg;
-          $char_replace="";
-          $intLength = strlen($Msg);
-          $intKeyLength = strlen($strKey);
-          $intKeyOffset = $intKeyLength;
-          $intKeyChar = ord(substr($strKey, -1));
-          for ($n=0; $n < $intLength ; $n++) { 
-              $intKeyOffset = $intKeyOffset + 1;
-
-              if($intKeyOffset > $intKeyLength) {
-                  $intKeyOffset = 1;
-              }
-              $intAsc = ord(substr($Msg,$n, 1));
-
-              if($intAsc > 32 && $intAsc < 127){
-                  $intAsc = $intAsc - 32;
-                  $intAsc = $intAsc + $intKeyChar;
-
-                  while ( $intAsc > 94) {
-                     $intAsc = $intAsc - 94;
-                  }
-
-                  $intSkip = $n+1 % 94;
-                  $intAsc = $intAsc + $intSkip;
-                  if($intAsc > 94){
-                      $intAsc = $intAsc - 94;
-                  }
-
-                  $char_replace .= chr($intAsc + 32);
-                  
-                  $Msg = $char_replace . substr($varMsg, $n+1) ;
-              }
-
-              $intKeyChar = ord(substr($strKey, $intKeyOffset-1));
-          }
-          return $Msg;
-      } catch (Exception $e) {
-          
+          $spreadsheet->getActiveSheet()->getStyle('A2:I'.$i)->applyFromArray($styleArray);
+        $i++;
       }
+
+
+      foreach (range('A','I') as $col) {
+        $spreadsheet->getActiveSheet()->getColumnDimension($col)->setAutoSize(true);  
+      }
+
+     
+      // exit();
+      $writer = new Xlsx($spreadsheet);
+
+      header('Content-Type: application/vnd.ms-excel');
+      header('Content-Disposition: attachment;filename="Data Member.xlsx"');
+      header('Cache-Control: max-age=0');
+
+      $writer->save('php://output');
+  }
+  function Acak($varMsg,$strKey) {
+    try {
+        $Msg = $varMsg;
+        $char_replace="";
+        $intLength = strlen($Msg);
+        $intKeyLength = strlen($strKey);
+        $intKeyOffset = $intKeyLength;
+        $intKeyChar = ord(substr($strKey, -1));
+        for ($n=0; $n < $intLength ; $n++) { 
+            $intKeyOffset = $intKeyOffset + 1;
+
+            if($intKeyOffset > $intKeyLength) {
+                $intKeyOffset = 1;
+            }
+            $intAsc = ord(substr($Msg,$n, 1));
+
+            if($intAsc > 32 && $intAsc < 127){
+                $intAsc = $intAsc - 32;
+                $intAsc = $intAsc + $intKeyChar;
+
+                while ( $intAsc > 94) {
+                   $intAsc = $intAsc - 94;
+                }
+
+                $intSkip = $n+1 % 94;
+                $intAsc = $intAsc + $intSkip;
+                if($intAsc > 94){
+                    $intAsc = $intAsc - 94;
+                }
+
+                $char_replace .= chr($intAsc + 32);
+                
+                $Msg = $char_replace . substr($varMsg, $n+1) ;
+            }
+
+            $intKeyChar = ord(substr($strKey, $intKeyOffset-1));
+        }
+        return $Msg;
+    } catch (Exception $e) {
+        
+    }
+  }
+
+  public function upload(){
+    
+    array_map('unlink', array_filter(
+            (array) array_merge(glob("./upload/*"))));
+  
+    $fileName = $_FILES['file']['name'];
+
+    $config['remove_spaces'] = FALSE;
+    $config['upload_path'] = './upload/'; //path upload
+    $config['file_name'] = $fileName;  // nama file
+    $config['allowed_types'] = 'xls|xlsx|csv'; //tipe file yang diperbolehkan
+    $config['max_size'] = 10000; // maksimal sizze
+
+
+    $this->load->library('upload'); //meload librari upload
+    $this->upload->overwrite = true;
+    $this->upload->initialize($config);
+      
+    if(! $this->upload->do_upload('file') ){
+        echo $this->upload->display_errors();exit();
+    }
+            
+    $inputFileName = './upload/'.$fileName;
+
+    
+    $reader = ReaderFactory::create(Type::XLSX); //set Type file xlsx
+    $reader->open($inputFileName); //open the file           
+
+    echo "<pre>";           
+    $i = 0; 
+
+    foreach ($reader->getSheetIterator() as $sheet) {             
+        foreach ($sheet->getRowIterator() as $rowData) {
+          if($i>0){
+            $kec_id = 0;
+
+            if(!empty($rowData[1])){
+
+              $cek_kec_id = $this->admin->get_array('tb_kecamatan',array( 'subdistrict_name' => $rowData[6]));
+              if(!empty($cek_kec_id)){
+                  $kec_id = $cek_kec_id['subdistrict_id'];
+              }
+
+              $this->db->from('members');
+              $this->db->order_by('id','desc');
+              $this->db->limit(1);
+              $get_last = $this->db->get()->row_array();
+              $kode = 'A1';
+              if(!empty($get_last)){
+                  $urut = preg_replace('/[^0-9]/', '', $get_last['kode_member']);
+                  $prefix = preg_replace('/[^a-zA-Z]/', '',$get_last['kode_member']);
+                  // print("<pre>".print_r($prefix,true)."</pre>");exit();
+        
+                  if($urut > 999){
+                      ++$prefix;
+                      $kode = $prefix . '1';
+                  }else{
+                      $kode = $prefix . ((int)$urut+1);
+                  }
+              }
+
+              $data = array(
+                  "email"=> $rowData[0],
+                  "nomor_wa"=> $rowData[1],
+                  "nama_lengkap"=> $rowData[2],
+                  "nama_facebook"=> $rowData[3],
+                  "alamat"=> $rowData[4],
+                  "kelurahan"=> $rowData[5],
+                  "kecamatan"=> $rowData[6],
+                  "kota"=> $rowData[7],
+                  "provinsi"=> $rowData[8],
+                  "kec_id" => $kec_id,
+                  "kode_member" => $kode
+              );
+
+              $exist = $this->admin->get_array('members',array( 'nomor_wa' => $rowData[1]));
+              if($kec_id == 0) {
+                print_r($rowData[2] . " Kecamatan tidak ditemukan.<br>");
+              }elseif(empty($exist)){
+                $insert = $this->db->insert("members",$data);
+                print_r($rowData);
+
+              }else{
+                print_r($rowData[2] . " tidak boleh duplicate.<br>");
+              }
+            }else{
+              goto tutup;
+            }
+            
+             
+          }
+          ++$i;
+        }
+    }
+    tutup:
+    echo "<br> Total Rows : ".($i-1)." <br>";               
+    $reader->close();
+                   
+
+    echo "Peak memory:", (memory_get_peak_usage(true) / 1024 / 1024), " MB" ,"<br>";
   }
 }

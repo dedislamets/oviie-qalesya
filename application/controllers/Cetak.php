@@ -31,6 +31,7 @@ class Cetak extends CI_Controller {
 
 			if ($page == 'invoice'){	
 				$this->db->from("invoice");
+	          	$this->db->join("tb_admin","tb_admin.nohp=invoice.hp_admin");
 		      	// $this->db->join("barang","barang.kode_barang=rekapan.kode_product");
 		      	$this->db->join("members","members.kode_member=invoice.id_member");
 		      	$this->db->where("kode_inv",$id);
@@ -39,7 +40,22 @@ class Cetak extends CI_Controller {
 	          	$this->db->select("kode_order,kode_barang,nama_barang,qty,berat,harga");
 	          	$this->db->from("rekapan");
 	          	$this->db->join("barang","barang.kode_barang=rekapan.kode_product");
-	          	$this->db->where(array("id_posting" => $data['header']['id_posting'], "id_member" => $data['header']['id_member']));
+	          	$this->db->where(array("id_invoice" => $data['header']['id'], "id_member" => $data['header']['id_member']));
+	          	$data['detail'] = $this->db->get()->result_array();
+				$this->load->view('cetak_thermal',$data,FALSE); 
+			}
+			if ($page == 'invoicegroup'){	
+				$this->db->from("invoice");
+	          	$this->db->join("tb_admin","tb_admin.nohp=invoice.hp_admin");
+		      	// $this->db->join("barang","barang.kode_barang=rekapan.kode_product");
+		      	$this->db->join("members","members.kode_member=invoice.id_member");
+		      	$this->db->where("kode_inv",$id);
+	        	$data['header'] = $this->db->get()->row_array();
+
+	          	$this->db->select("kode_order,kode_barang,nama_barang,qty,berat,harga");
+	          	$this->db->from("rekapan");
+	          	$this->db->join("barang","barang.kode_barang=rekapan.kode_product");
+	          	$this->db->where(array("id_invoice" => $data['header']['id'], "id_member" => $data['header']['id_member']));
 	          	$data['detail'] = $this->db->get()->result_array();
 				$this->load->view('cetak_thermal',$data,FALSE); 
 			}

@@ -69,6 +69,10 @@
 			$('#ModalAdd').modal({ keyboard: false}) ;
 		});
 
+		$('#btnUpload').on('click', function (event) {
+	    	$('#ModalAdd').modal({backdrop: 'static', keyboard: false}) ;
+	    });
+
 	})
 
 	$("#ada_bawahan").change(function() {

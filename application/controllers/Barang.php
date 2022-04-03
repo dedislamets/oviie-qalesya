@@ -182,6 +182,7 @@ class Barang extends CI_Controller {
       $data['main'] = 'barang/create';
       $data['js'] = 'script/barang-create';
       $data['mode'] = 'Edit';
+      $data['modal'] = 'modal/barang';
 
       $data['barang'] = $this->admin->get_array('barang',array( 'kode_barang' => $id));
       

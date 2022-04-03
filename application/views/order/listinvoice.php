@@ -47,7 +47,11 @@
                         <a class="nav-link" id="cancel-tab" data-toggle="tab" href="#cancel" role="tab" aria-controls="assumtion" aria-expanded="false" aria-selected="false">
                             Cancel
                         </a>
-                        
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="group-tab" data-toggle="tab" href="#group" role="tab" aria-controls="group" aria-expanded="false" aria-selected="false">
+                            Grouping
+                        </a>
                     </li>
                 </ul>
                 </div>
@@ -273,7 +277,58 @@
                                 
                               </tbody>
                           </table>
-                      </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="group" role="tabpanel" aria-labelledby="group-tab" aria-expanded="false">
+                        <div class="table-wrapper">
+                          <div class="card bd-primary" style="margin-bottom: 10px;">
+                            <div class="card-header bg-primary tx-white">
+                              <div class="pull-right">
+                                <a class="btn btn-dark btn-rounded" id="btnAdd" href="javascript:void(0)"><i class="fa fa-plus"></i>&nbsp; Tambah</a>
+                              </div>
+                            </div>
+                          </div>
+                          <table id="InvoiceListGroup" class="table table-striped" width="100%" >
+                              <thead class="text-primary">
+                                  <tr>
+                                      <th style="width: 100px">
+                                        No Invoice
+                                      </th>
+                                      <th>
+                                        Tgl Invoice
+                                      </th>
+                                      <th>
+                                        Expired
+                                      </th>
+                                      <th>
+                                        Nama Pemesan
+                                      </th>
+                                      
+                                      <th>
+                                        Qty
+                                      </th>
+                                      <th>
+                                        Berat
+                                      </th>
+                                      <th>
+                                        Ongkir
+                                      </th>
+                                      <th>
+                                        Subtotal
+                                      </th>
+                                      <th>
+                                        Status
+                                      </th>
+                                      <th>
+                                        Aksi
+                                      </th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                
+                              </tbody>
+                          </table>
+                        </div>
                     </div>
                 </div>
             </div>
