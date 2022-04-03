@@ -100,7 +100,7 @@ class Order extends CI_Controller {
             $member = $this->admin->get_array('members',array( 'kode_member' => $cek_kode['id_member'] ));
             $msg = "*Pembayaran Diterima*
                     -----------------------------------
-                    NO INVOICE : ". $cek_kode['kode_order'] ."
+                    NO INVOICE : ". $cek_kode['kode_inv'] ."
                     BANK: ". $response->module ."
                     TANGGAL: ". $value_mutasi->system_date ."
                     DESC : ". $value_mutasi->description ."
@@ -109,7 +109,7 @@ class Order extends CI_Controller {
                     ------------------------------------
                     *Note : Pembayaran berhasil, pesanan anda akan segera kami proses.*
 
-                    _Tim Prastika Collection_";
+                    _Tim Oviie Qalesyashop Boutique_";
             $this->admin->simpan_wa($member['nomor_wa'], $msg);
 
           }
