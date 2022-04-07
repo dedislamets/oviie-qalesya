@@ -157,6 +157,9 @@
             padding-left: 15px;
             display: none;
         }
+        .hr-mobile{
+            display: none;
+        }
         @media (max-width: 575px){
             .container {
                 padding-left: 15px; 
@@ -219,6 +222,7 @@
                 float: none;
                 background-color: goldenrod;
             }
+
         }
     </style>
 </head>
@@ -263,8 +267,8 @@
                     $this->load->view('home/index'); 
                 } 
             ?>
-            <hr>
-            <div class="row">
+            <hr class="hr-mobile">
+            <div class="row hr-mobile">
                 <ul class="nav-mobile">
                      <li>
                         <a class="nav-link scrollto " href="<?= base_url() ?>daftar">Daftar Member Baru</a>
