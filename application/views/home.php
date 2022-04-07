@@ -222,7 +222,9 @@
                 float: none;
                 background-color: goldenrod;
             }
-
+            .hr-mobile{
+                display: block;
+            }
         }
     </style>
 </head>
