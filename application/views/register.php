@@ -224,8 +224,8 @@
                   
                 </div>
                 <p class="font-weight-bold text-uppercase text-center mb-2">Lupa Member ID? <a href="<?= base_url()?>lupa">Klik Disini</a></p>
-                <p class="font-weight-bold text-uppercase text-center mb-2">Mau Ubah Alamat? <a href="https://www.butikmelati.com/change_address">Klik Disini</a></p>
-                <p class="font-weight-bold text-uppercase text-center mb-2">Cara Order <a href="https://www.butikmelati.com/how_to">Klik Disini</a></p>
+                <p class="font-weight-bold text-uppercase text-center mb-2">Mau Ubah Alamat? <a href="<?= base_url() ?>ubah-alamat">Klik Disini</a></p>
+                <p class="font-weight-bold text-uppercase text-center mb-2">Cara Order <a href="#">Klik Disini</a></p>
                 <!-- <hr>
                 <p class="font-weight-bold text-uppercase text-center mb-2">WhatsApp Admin : 0822 1666 6206</p> -->
               </div>

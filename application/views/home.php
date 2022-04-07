@@ -21,135 +21,284 @@
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
     <style type="text/css">
         body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-image: url('assets/images/hero-bg.png');
-            /*background-color:#C71585;*/
-            /*background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);*/
+            /*display: flex;*/
+            /*align-items: center;*/
+            /*justify-content: center;*/
+            /*background-image: url('assets/images/hero-bg.png');*/
+            background-color: #feedbd;
+       
         }
-        .container {
-            text-align: center;
-        }   
+        .container{
+            background-color: #fff;
+            margin-top: 40px;
+            padding-left: 45px;
+        }
+        #header {
+            transition: all 0.5s;
+            z-index: 997;
+            padding: 15px 0;
+        }
+        .fixed-top {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 1030;
+        } 
+        .align-items-center {
+            align-items: center!important;
+        }
+        .d-flex {
+            display: flex!important;
+            padding: 30px 45px 11px;
+            
+        }
         h1 {
             margin-bottom: 5px;
-            font-size: 40px;
-            letter-spacing: 10px;
-            font-family: 'Kalam', cursive;
-            color: #fff;
-            text-shadow: 0 2px 5px #808080;
+            font-size: 35px;
+            /*letter-spacing: 10px;*/
+            font-family: 'Roboto', cursive;
+            color: #a66780;
+            margin: 34% auto;
+            /*text-shadow: 0 2px 5px #808080;*/
             /*-webkit-text-stroke: 1px #808080;*/
         }
-        h5 {
-            margin: 0 0 50px 0;
+
+       #header .logo {
             font-size: 30px;
-            /*font-family: sans-serif;*/
-            font-family: 'Kalam', cursive;
-            /*letter-spacing: 4px;*/
-            color: #fff;
-            font-weight: bold;
-            text-shadow: 0 2px 5px #808080;
-
-        }
-        small {
-            display: block;
-            font-family: 'Kalam', cursive;
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+            font-weight: 500;
             letter-spacing: 2px;
-            color: #fff;
-            font-size: 10px;
-            margin-top: 50px;
-        }
-        .button-1 {
-            background-color: #fff;
-            border: 3px solid gold;
-            border-radius: 50px;
-            font-family: 'Kalam', cursive;
-            -webkit-transition: all .15s ease-in-out;
-            transition: all .15s ease-in-out;
-            color: hsla(37, 95%, 67%, 1);
-            box-shadow: 0 0 5px 0 #ff9700 inset, 0 0 10px 2px #ff9700;
-
-        }
-        .button-1:hover {
-            box-shadow: 0 0 10px 0 #ff9700 inset, 0 0 20px 2px #ff9700;
-            border: 3px solid #FFF;
-            color: #fff;
-        }
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            70% {
-                transform: scale(.9);
-            }
-            100% {
-                transform: scale(1);
-            }
+            text-transform: uppercase;
+            margin-top: 73px;
         }
 
-        .logo-samping {
-            background-color: #ffff;
-            border: solid 2px #ffad00;
+        .me-auto {
+            margin-right: auto!important;
+        }
+        .navbar {
+            padding: 0;
+        }
+        .navbar {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .navbar ul {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        .navbar li {
+            position: relative;
+        }
+        .navbar a:hover, .navbar .active, .navbar .active:focus, .navbar li:hover > a {
+            color: goldenrod;
+        }
+        #hero {
+            margin-top: 20px;
+        }
+        .navbar a, .navbar a:focus {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0 10px 30px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #a66780;
+            white-space: nowrap;
+            transition: 0.3s;
+        }
+        section {
+            padding: 60px 0;
+            overflow: hidden;
+        }
+        .me-auto{
+            position: absolute;
+            top:0;
+        }
+        .footer{
+            padding-bottom: 30px;
+            color: #a66780;
+        }
+        .icon-footer{
+            color: #a66780;
+        }
+        .social-links a {
+            font-size: 18px;
+            display: inline-block;
+            background: #a66780;
+            color: #fff;
+            line-height: 1;
+            padding: 8px 0;
+            margin-right: 4px;
             border-radius: 50%;
-            padding: 29px;
-            width: 460px;
-            box-shadow: 0 0 10px 0 #ff9700 inset, 0 0 20px 2px #ff9700;
-
-        }
-
-        footer{
-            position: fixed;
-            bottom: 0;
             text-align: center;
-            width: 100%;
-            padding: 20px 0;
+            width: 36px;
+            height: 36px;
+            transition: 0.3s;
+            float: right;
+        }
+        .header-mobile{
+            width: 250px;
+            padding-top: 10px;
+            padding-left: 15px;
+            display: none;
         }
         @media (max-width: 575px){
-            .logo-samping {
-                background-color: #ffff;
-                border: solid 7px gold;
-                border-radius: 50%;
-                padding: 29px;
-                width: 198px;
-                margin-bottom: 20px;
+            .container {
+                padding-left: 15px; 
+                margin-top: 10px;
             }
-
+            #header {
+                display: none;
+            }
+            #hero {
+                margin-top: 0;
+                padding: 25px;
+            }
+            .header-mobile{
+                width: 100%;
+                padding-top: 10px;
+                padding-left: 15px;
+                display: block;
+            }
+            h1 {
+                margin-bottom: 5px;
+                font-size: 19px;
+                text-align: center;
+                font-family: 'Roboto', cursive;
+                color: goldenrod;
+                margin: 0; 
+                /* text-shadow: 0 2px 5px #808080; */
+                /* -webkit-text-stroke: 1px #808080; */
+            }
+            #btnContact {
+                display: none;
+            }
+            .copyright{
+                display: none;
+            }
             .welcome-title{
                 display: none;
             }
             .isi{
                 margin-top: 20px;
             }
+            #img-konten{
+                display: none;
+            }
+            .nav-mobile{
+                width: 100%;
+                text-align: center;
+            }
+            .nav-mobile li a{
+                color: goldenrod;
+                font-size: 21px;
+            }
+            hr{
+                border-bottom: 1px solid goldenrod;
+            }
+            .social-links {
+                text-align: center;
+                margin-top: 20px;
+            }
+            .social-links a {
+                float: none;
+                background-color: goldenrod;
+            }
         }
     </style>
 </head>
 <body>
-
-    <!-- <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/loder.jpg" alt="">
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center" style="display: block !important;">
+            <h1 class="logo me-auto"> 
+                <img src="assets/images/logo-ovie.png" alt="" style="width: 250px;">
+            </h1>
+            <nav id="navbar" class="navbar" style="float: right;">
+                <ul>
+                    <li>
+                        <a class="nav-link scrollto " href="<?= base_url() ?>daftar">Daftar Member Baru</a>
+                    </li>
+                    <li>
+                        <a class="nav-link scrollto" href="<?= base_url() ?>lupa">Lupa Member ID</a>
+                    </li>
+                    <li>
+                        <a class="nav-link scrollto" href="<?= base_url() ?>ubah-alamat">Ubah Alamat Pengiriman</a>
+                    </li>
+                    <li>
+                        <a class="nav-link scrollto" href="#portfolio">Cara Order</a>
+                    </li>
+                    <li>
+                        <a class="nav-link scrollto" href="#team">Tracking</a>
+                    </li>
+                </ul> 
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+        </div>
+    </header>
+    <section id="hero" class="d-flex align-items-center">
+        <div class="container">
+            <div class="row">
+                <img src="assets/images/logo-ovie.png" class="header-mobile" >
+            </div>
+            <?php
+                if ($this->router->fetch_class() != 'home'){            
+                    $this->load->view($main); 
+                }
+                else {                  
+                    $this->load->view('home/index'); 
+                } 
+            ?>
+            <hr>
+            <div class="row">
+                <ul class="nav-mobile">
+                     <li>
+                        <a class="nav-link scrollto " href="<?= base_url() ?>daftar">Daftar Member Baru</a>
+                    </li>
+                    <li>
+                        <a class="nav-link scrollto" href="<?= base_url() ?>lupa">Lupa Member ID</a>
+                    </li>
+                    <li>
+                        <a class="nav-link scrollto" href="<?= base_url() ?>ubah-alamat">Ubah Alamat Pengiriman</a>
+                    </li>
+                    <li>
+                        <a class="nav-link scrollto" href="#portfolio">Cara Order</a>
+                    </li>
+                    <li>
+                        <a class="nav-link scrollto" href="#team">Tracking</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row"> 
+                <div class="col-md-6 col-sm-12 col-xs-12 footer copyright">
+                    Copyright &copy; 2022 &sdot; oviieqalesyashopboutique.com
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 footer">
+                    <div class="social-links"> 
+                        <a href="#" class="twitter"><i class="fa fa-map"></i></a> 
+                        <a href="#" class="facebook"><i class="icon ion-logo-facebook"></i></a> 
+                        <a href="#" class="instagram"><i class="icon ion-logo-instagram"></i></a> 
+                        <a href="#" class="google-plus"><i class="icon ion-logo-whatsapp"></i></a> 
+                    </div>
                 </div>
             </div>
         </div>
-    </div> -->
-
-    <div class="container">
-        <?php
-            if ($this->router->fetch_class() != 'home'){            
-                $this->load->view($main); 
-            }
-            else {                  
-                $this->load->view('home/index'); 
-            } 
-        ?>
-    </div>
-    <footer>Copyright &copy; 2022 &sdot; oviieqalesyashopboutique.com</footer>
+        
+    </section>
     <script src="<?= base_url(); ?>assets/js/vendor/modernizr-3.5.0.min.js"></script>
 
     <script src="<?= base_url(); ?>assets/js/vendor/jquery-1.12.4.min.js"></script>
@@ -177,6 +326,7 @@
     <script src="<?= base_url(); ?>assets/js/plugins.js"></script>
     <script src="<?= base_url(); ?>assets/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script> -->
     
     <script type="text/javascript">
