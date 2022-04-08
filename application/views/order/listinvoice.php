@@ -30,7 +30,7 @@
         <div class="row">
           <div class="col-lg-12">
                 <div class="clearfix">
-                    <ul class="nav nav-tabs float-left mb-0" id="myTab" role="tablist">
+                  <ul class="nav nav-tabs float-left mb-0" id="myTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-expanded="true" aria-selected="true">Pending</a>
                     </li>
@@ -53,7 +53,7 @@
                             Grouping
                         </a>
                     </li>
-                </ul>
+                  </ul>
                 </div>
                 <div class="tab-content shadow rounded-bottom mb-lg" id="myTabContent">
                     <div role="tabpanel" class="tab-pane in clearfix active" id="basic" aria-labelledby="basic-tab" aria-expanded="true">

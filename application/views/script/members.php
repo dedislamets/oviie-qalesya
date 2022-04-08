@@ -27,6 +27,7 @@
 	
 
 	$(document).ready(function(){  
+		$(".select2").select2();
 		var modal_lv = 0;
 		$('.modal').on('shown.bs.modal', function (e) {
 		    $('.modal-backdrop:last').css('zIndex',1051+modal_lv);
@@ -50,174 +51,163 @@
 	        processing	: true,
 			serverSide	: true,			
 			"bPaginate": true,	
-			// "ordering": false,
 			"autoWidth": true,
-			
+	    });
+	    $('#ViewTableBlacklist').DataTable({
+			dom: 'frtip',
+			ajax: {		            
+	            "url": "members/dataTableBlacklist",
+	            "type": "GET"
+	        },
+	        processing	: true,
+			serverSide	: true,			
+			"bPaginate": true,	
+			"autoWidth": true,
 	    });
 
 	    $('#btnAdd').on('click', function (event) {
-	    	app.mode = 'new';
 			$("#lbl-title").text('Tambah');
-			$("#nama_user").val('');
+			$("#nama_lengkap").val('');
+			$("#nama_facebook").val('');
+			$("#nama_lengkap").val('');
+			$("#alamat_lengkap").val('');
 			$("#email").val('');
-			$("#password").val('');
-			$("#status").prop('checked', false);
-			$("#data-bawahan").css('display','none');
+			$("#nomor_wa").val('');
+			$("#provinsi").val('');
+			$("#kecamatan").val('');
+			$("#kota").val('');
+			$("#kelurahan").val('');
 
 			$("#id").val('');
 
-			$('#ModalAdd').modal({ keyboard: false}) ;
+			$('#ModalEdit').modal({ keyboard: false}) ;
 		});
 
 		$('#btnUpload').on('click', function (event) {
 	    	$('#ModalAdd').modal({backdrop: 'static', keyboard: false}) ;
 	    });
-
 	})
 
-	$("#ada_bawahan").change(function() {
-	    if(this.checked && app.mode == 'edit') {
-	    	$("#data-bawahan").css('display','block');
-	    }
-	    else{
-	    	$("#data-bawahan").css('display','none');
-	    }
-	});
+    $("#provinsi").change(function(e, params){ 
+    	getKota($('#provinsi').val(),'kota');
+  	});
+  	$("#kota").change(function(e, params){   
+      	getKecamatan($('#kota').val(),'kecamatan');
+  	});
+  	$("#kecamatan").change(function(e, params){   
+      	getKelurahan($('#kecamatan').val(),'kelurahan');
+  	});
+
+  	function getKota(val,name,selected="", selected_kec =""){
+    	$.get('<?= base_url() ?>register/getKota', { prov: val  }, function(data){ 
+
+          	$('#' + name).empty();
+          	var kota_def = ''; var kota_selected = '';
+          	$.each(data,function(i,value){
+            	if(i==0) kota_def = value.type + '. ' + value.city_name;
+            	if(selected !="" && (value.type + '. ' + value.city_name) == selected) {
+            		kota_selected="selected";
+            	}else{
+            		kota_selected="";
+            		kota_def=selected;
+            	}
+            	$('#' + name).append('<option value="'+ value.type + '. ' + value.city_name +'" '+ kota_selected +'>'+ value.type + ' ' + value.city_name +'</option>');
+
+          	})
+  			if(selected_kec != ""){
+  				getKecamatan(kota_def,'kecamatan',selected_kec);
+  			}else{
+          		getKecamatan(kota_def,'kecamatan');
+  			}
+
+    	});
+     
+  	}
+  	function getKecamatan(val,name,selected=""){
+    	$.get('<?= base_url() ?>register/getKecamatan', { kota: val  }, function(data){ 
+
+      		$('#' + name).empty();
+      		$('#kecamatan').append('<option value="">Pilih Kecamatan</option>');
+      		var kota_selected = '';
+      		$.each(data,function(i,value){
+      			if(selected !="" && value.subdistrict_name == selected) {
+            		kota_selected="selected";
+            	}else{
+            		kota_selected="";
+            	}
+              	$('#' + name).append('<option value="'+value.subdistrict_name+'" '+ kota_selected +'>'+value.subdistrict_name+'</option>');
+          	})
+      	});
+
+      	$('#kelurahan').empty();
+      	$('#kelurahan').append('<option value="">Pilih Kelurahan</option>');
+  	}
+  	function getKelurahan(val,name,selected_kel=""){
+    	$.get('<?= base_url() ?>register/getKelurahan', { kec: val  }, function(data){ 
+
+      		$('#' + name).empty();
+      		var selected = '';
+        	$.each(data,function(i,value){
+        		if(selected_kel !="" && value.kelurahan == selected_kel) {
+            		selected="selected";
+            	}else{
+            		selected="";
+            	}
+              $('#' + name).append('<option value="'+value.kelurahan+'" '+ selected +'>'+value.kelurahan+'</option>');
+          	})
+      	});
+  	}
 
 	function editmodal(val){
+		$.get('members/edit', { id: $(val).data('id') }, function(data){ 
+			$("#lbl-title").text("Edit");
+     		$("#nama_lengkap").val(data['parent'][0]['nama_lengkap']);
+     		$("#nama_facebook").val(data['parent'][0]['nama_facebook']);
+			$("#email").val(data['parent'][0]['email']);
 
-		$.get('users/edit', { id: $(val).data('id') }, function(data){ 
-				app.id_atasan = $(val).data('id');
-				app.mode = 'edit';
-				$("#lbl-title").text("Edit");
-         		$("#nama_user").val(data['parent'][0]['nama_user']);
-				$("#email").val(data['parent'][0]['email']);
+			$("#nomor_wa").val(data['parent'][0]['nomor_wa']);
+			$("#alamat_lengkap").html(data['parent'][0]['alamat'].replace(/<br *\/?>/gi, ''));
 
-				$("#department").val(data['parent'][0]['department']);
-				$("#jenis_kelamin").val(data['parent'][0]['jenis_kelamin']);
+			$("#provinsi").val(data['parent'][0]['provinsi']);
+			getKota($('#provinsi').val(),'kota',data['parent'][0]['kota'],data['parent'][0]['kecamatan']);
+			// $("#kota").val(data['parent'][0]['kota']);
+			getKecamatan($('#kota').val(),'kecamatan',data['parent'][0]['kecamatan']);
+			// $("#kecamatan").val(data['parent'][0]['kecamatan']);
+			getKelurahan(data['parent'][0]['kecamatan'],'kelurahan',data['parent'][0]['kelurahan']);
+			// $("#kelurahan").val(data['parent'][0]['kelurahan']);
+			$("#id").val(data['parent'][0]['id']);
 
-				$("#password").val('');
-				$("#id_role").val(data['parent'][0]['id_role']);
 
-				if(data['parent'][0]['status'] == 1){
-					$("#status").prop('checked', true);
-				}else{
-					$("#status").removeAttr("checked");
-				}
-
-				if(data['parent'][0]['ada_bawahan'] == 1){
-					$("#ada_bawahan").prop('checked', true);
-					$("#data-bawahan").css('display','block');
-				}else{
-					$("#ada_bawahan").removeAttr("checked");
-					$("#data-bawahan").css('display','none');
-				}
-
-				$("#id").val(data['parent'][0]['id_user']);
-
-				app.myTable = $('#ViewTableUser').DataTable({
-					dom: 'frtip',
-					ajax: {		            
-			            "url": "users/dataTableModalBahawan?id=" + $(val).data('id'),
-			            "type": "GET"
-			        },
-			        processing	: true,
-					serverSide	: true,			
-					"bPaginate": true,	
-					"autoWidth": true,
-					"destroy": true,
-		            
-			    });
-
-				app.myTable2 = $('#ModalTableUser').DataTable({
-					dom: 'frtip',
-					ajax: {		            
-			            "url": "users/dataTableModal",
-			            "type": "GET"
-			        },
-			        processing	: true,
-					serverSide	: true,			
-					"bPaginate": true,	
-					"autoWidth": true,
-					"destroy": true,
-		            
-			    });
-
-           		$('#ModalAdd').modal({backdrop: 'static', keyboard: false}) ;
-           
+       		$('#ModalEdit').modal({backdrop: 'static', keyboard: false}) ;
+       
         });
 
 	}
 
-	function removeRole(val) {
-		var r = confirm("Yakin dihapus?");
-		if (r == true) {
-			
-			$.post('users/delete_bawahan', { id: $(val).data('id') }, function(data){ 
-				app.myTable.ajax.url("users/dataTableModalBahawan?id=" + app.id_atasan).load();
-			})
-		
-		}
-	}
-
-	$('#btnpilih').on('click', function (event) {
-
-        var checked_courses = $('#ModalTableUser').find('input[name="selected_courses[]"]:checked').length;
-        if (checked_courses != 0) {
-            CheckedTrue();
-            
-        } else {
-            alert("Silahkan pilih terlebih dahulu");
-        }
-
-    });
-
-    function CheckedTrue() {
-        var b = $("#txtSelected");
-        b.val('');
-        var str = "";
-        var rowcollection = app.myTable2.$(':checkbox', { "page": "all" });
-        rowcollection.each(function () {
-            if (this.checked) {
-                str += this.value + ";";
-            }
-        });
-        b.val(str);                        
-        $.ajax({
-            type: "POST",
-            url: 'users/add',
-            data: {id_user: str, id_atasan: app.id_atasan},
-            dataType: "json",
-            traditional: true,	            
-           	beforeSend: function(){
-				
-			},
-		    success: function (data) {
-		    	app.myTable.ajax.url("users/dataTableModalBahawan?id=" + app.id_atasan).load();
-				$('#ModalUser').modal('hide');
-	        },
-        });
-        
-    }
 	
-	$('#btnSubmit').on('click', function (e) {
+	$('#btnSubmitEdit').on('click', function (e) {
 		var valid = false;
-    	var sParam = $('#Form').serialize();
-    	var validator = $('#Form').validate({
+    	var sParam = $('#FormEdit').serialize();
+    	var validator = $('#FormEdit').validate({
 							rules: {
-									nama_user: {
+									nama_lengkap: {
 							  			required: true
 									},
-									email: {
+									nomor_wa: {
 							  			required: true
 									},
-									
+									alamat_lengkap: {
+							  			required: true
+									},
+									kelurahan: {
+							  			required: true
+									},
 								}
 							});
 	 	validator.valid();
 	 	$status = validator.form();
 	 	if($status) {
-	 		var link = 'users/Save';
+	 		var link = 'members/Save';
 	 		$.post(link,sParam, function(data){
 				if(data.error==false){									
 					window.location.reload();
@@ -231,15 +221,52 @@
         
     });
 
+    $('#btnSubmitBanned').on('click', function (e) {
+    	e.preventDefault();
+    	var valid = false;
+    	var sParam = $('#FormBlacklist').serialize();
+    	var validator = $('#FormBlacklist').validate({
+							rules: {
+									alasan: {
+							  			required: true
+									},
+								}
+							});
+	 	validator.valid();
+	 	$status = validator.form();
+	 	if($status) {
+			$.post('members/banned', sParam, function(data){ 
+				if(data.error==false){									
+					window.location.reload();
+				}
+			})
+		}
+    })
+
 	function hapus(val) {
 		var r = confirm("Yakin dihapus?");
 		if (r == true) {
 			
-			$.get('users/delete', { id: $(val).data('id') }, function(data){ 
+			$.get('members/delete', { id: $(val).data('id') }, function(data){ 
 				window.location.reload();
 			})
 		
 		}
+	}
+	function hapusBlacklist(val) {
+		var r = confirm("Yakin dihapus?");
+		if (r == true) {
+			
+			$.get('members/deleteblacklist', { id: $(val).data('id') }, function(data){ 
+				window.location.reload();
+			})
+		
+		}
+	}
+
+	function banned(val) {
+		$("#id_member").val($(val).data('id'));
+		$('#ModalBan').modal({ keyboard: false}) ;
 	}
 
 	

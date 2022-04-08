@@ -5,6 +5,7 @@
 <head>
     <title>Oviie Qalesya</title>
     <link href="<?= base_url() ?>assets/css/application.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="<?= base_url() ?>assets/main/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="<?= base_url() ?>assets/main/lib/datatables/jquery.dataTables.css" rel="stylesheet">
@@ -25,18 +26,32 @@
         */
     </script>
     <style type="text/css">
-      .navbar-white {
+        .select2-container{
+            width: 95% !important;
+        }
+        .select2-container--open .select2-dropdown {
+            width: 446px !important;
+            z-index: 2000;
+        }
+        .select2.select2-container.select2-container--default .select2-selection.select2-selection--single, .select2.select2-container.select2-container--default .select2-selection.select2-selection--multiple {
+            background: #fff;
+            border: 1px solid #c1ccd3;
+        }
+        .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+            color: #e0a10f;
+        }
+        .navbar-white {
           background-color: #d4d4d4 !important;
-      }
-      .sidebar-nav {
-        padding: 0;
-      }
-      .error {
-        color: red;
-      }
-      .bold{
-        font-weight: bold;
-      }
+        }
+        .sidebar-nav {
+          padding: 0;
+        }
+        .error {
+            color: red;
+        }
+        .bold{
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -339,7 +354,8 @@
     <!-- Page scripts -->
     <script src="<?= base_url() ?>assets/node_modules/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="<?= base_url() ?>assets/node_modules/jquery-autosize/jquery.autosize.min.js"></script>
-    <script src="<?= base_url() ?>assets/node_modules/select2/dist/js/select2.min.js"></script>
+    <!-- <script src="<?= base_url() ?>assets/node_modules/select2/dist/js/select2.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- <script src="<?= base_url() ?>assets/node_modules/switchery/dist/switchery.min.js"></script> -->
     <script src="<?= base_url() ?>assets/node_modules/moment/min/moment.min.js"></script>
     <script src="<?= base_url() ?>assets/node_modules/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js"></script>

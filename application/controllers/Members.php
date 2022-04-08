@@ -30,7 +30,9 @@ class Members extends CI_Controller {
 			$data['main'] = 'users/members';
 			$data['js'] = 'script/members';
 			$data['modal'] = 'modal/member';
-      $data['group'] = $this->admin->getmaster('tb_group_role');
+      $data['provinsi'] = $this->db->query("select * from tb_provinsi")->result();
+      $data['kelurahan'] = $this->db->query("select distinct kelurahan from master_city")->result();
+      $data['alasan'] = $this->admin->getmaster("tb_alasan");
 			$this->load->view('dashboard',$data,FALSE); 
 
     }else{
@@ -40,152 +42,8 @@ class Members extends CI_Controller {
 						
 	}
 
-    public function dataTable()
-    {
-        $draw = intval($this->input->get("draw"));
-        $start = intval($this->input->get("start"));
-        $length = intval($this->input->get("length"));
-        $order = $this->input->get("order");
-        $search= $this->input->get("search");
-        $search = $search['value'];
-        $col = 10;
-        $dir = "";
-
-        if(!empty($order))
-        {
-            foreach($order as $o)
-            {
-                $col = $o['column'];
-                $dir= $o['dir'];
-            }
-        }
-
-        if($dir != "asc" && $dir != "desc")
-        {
-            $dir = "desc";
-        }
-
-        $valid_columns = array(
-            0=>'id',
-            1=>'email',
-            2=>'nomor_wa',
-            3=>'nama_lengkap',
-            4=>'nama_facebook',
-            5=>'kelurahan',
-            6=>'kecamatan',
-            7=>'kota',
-            8=>'provinsi',
-	          9 =>'kode_member'
-        );
-        $valid_sort = array(
-            0=>'id',
-            1=>'email',
-            2=>'nomor_wa',
-            3=>'nama_lengkap',
-            4=>'nama_facebook',
-            5=>'kelurahan',
-            6=>'kecamatan',
-            7=>'kota',
-            8=>'provinsi',
-	          9 =>'kode_member'
-        );
-        if(!isset($valid_sort[$col]))
-        {
-            $order = null;
-        }
-        else
-        {
-            $order = $valid_sort[$col];
-        }
-        if($order !=null)
-        {
-            $this->db->order_by($order, $dir);
-        }
-        
-        if(!empty($search))
-        {
-            $x=0;
-            foreach($valid_columns as $sterm)
-            {
-                if($x==0)
-                {
-                    $this->db->like($sterm,$search);
-                }
-                else
-                {
-                    $this->db->or_like($sterm,$search);
-                }
-                $x++;
-            }                 
-        }
-        $this->db->limit($length,$start);
-        $this->db->from("members");
-        // $this->db->join('tb_group_role', 'tb_group_role.id = tb_user.id_role','left');
-        $pengguna = $this->db->get();
-        $data = array();
-        foreach($pengguna->result() as $r)
-        {
-
-            $data[] = array( 
-                        $r->id,
-		    	               $r->kode_member,
-                        // $r->email,
-                        $r->nomor_wa,
-                        $r->nama_lengkap,
-                        $r->nama_facebook,
-                        $r->kelurahan,
-                        $r->kecamatan,
-                        $r->kota,
-                        $r->provinsi,
-                        '<button type="button" rel="tooltip" class="btn btn-warning btn-sm " onclick="editmodal(this)"  data-id="'.$r->id.'"  >
-                          <i class="icofont icofont-ui-edit"></i>Edit
-                        </button>
-                        <button type="button" rel="tooltip" class="btn btn-danger btn-sm " onclick="hapus(this)"  data-id="'.$r->id.'" >
-                          <i class="icofont icofont-trash"></i>Hapus
-                        </button> ',
-                   );
-        }
-        $total_pengguna = $this->totalPengguna($search, $valid_columns);
-
-        $output = array(
-            "draw" => $draw,
-            "recordsTotal" => $total_pengguna,
-            "recordsFiltered" => $total_pengguna,
-            "data" => $data
-        );
-        echo json_encode($output);
-        exit();
-    }
-
-    public function totalPengguna($search, $valid_columns)
-    {
-      $query = $this->db->select("COUNT(*) as num");
-      if(!empty($search))
-        {
-            $x=0;
-            foreach($valid_columns as $sterm)
-            {
-                if($x==0)
-                {
-                    $this->db->like($sterm,$search);
-                }
-                else
-                {
-                    $this->db->or_like($sterm,$search);
-                }
-                $x++;
-            }                 
-        }
-        $this->db->from("members");
-        // $this->db->join('tb_group_role', 'tb_group_role.id = tb_user.id_role','left');
-        $query = $this->db->get();
-      	$result = $query->row();
-      	if(isset($result)) return $result->num;
-      	return 0;
-    }
-
-    public function dataTableModal()
-    {
+  public function dataTable()
+  {
       $draw = intval($this->input->get("draw"));
       $start = intval($this->input->get("start"));
       $length = intval($this->input->get("length"));
@@ -208,15 +66,30 @@ class Members extends CI_Controller {
       {
           $dir = "desc";
       }
-        
+
       $valid_columns = array(
-          0=>'nama_user',
+          0=>'id',
           1=>'email',
-          
+          2=>'nomor_wa',
+          3=>'nama_lengkap',
+          4=>'nama_facebook',
+          5=>'kelurahan',
+          6=>'kecamatan',
+          7=>'kota',
+          8=>'provinsi',
+          9 =>'kode_member'
       );
       $valid_sort = array(
-          0=>'nama_user',
+          0=>'id',
           1=>'email',
+          2=>'nomor_wa',
+          3=>'nama_lengkap',
+          4=>'nama_facebook',
+          5=>'kelurahan',
+          6=>'kecamatan',
+          7=>'kota',
+          8=>'provinsi',
+          9 =>'kode_member'
       );
       if(!isset($valid_sort[$col]))
       {
@@ -247,24 +120,38 @@ class Members extends CI_Controller {
               $x++;
           }                 
       }
-
       $this->db->limit($length,$start);
-      $this->db->select("tb_user.*");
-      $this->db->from("tb_user");
-      $this->db->where('id_atasan', NULL);
-
+      $this->db->from("members");
+      $this->db->where("banned",0);
+      // $this->db->join('tb_group_role', 'tb_group_role.id = tb_user.id_role','left');
       $pengguna = $this->db->get();
       $data = array();
       foreach($pengguna->result() as $r)
       {
 
           $data[] = array( 
-                      '<input type="checkbox" name="selected_courses[]" value="'.$r->id_user.'">',
-                      $r->nama_user,
-                      $r->email,
+                      $r->id,
+	    	               $r->kode_member,
+                      // $r->email,
+                      $r->nomor_wa,
+                      $r->nama_lengkap,
+                      $r->nama_facebook,
+                      $r->kelurahan,
+                      $r->kecamatan,
+                      $r->kota,
+                      $r->provinsi,
+                      '<button type="button" rel="tooltip" class="btn btn-success btn-sm " onclick="editmodal(this)"  data-id="'.$r->id.'"  >
+                        <i class="icofont icofont-ui-edit"></i>Edit
+                      </button>
+                      <button type="button" rel="tooltip" class="btn btn-danger btn-sm " onclick="hapus(this)"  data-id="'.$r->id.'" >
+                        <i class="fa fa-trash"></i>
+                      </button>
+                      <button type="button" rel="tooltip" class="btn btn-warning btn-sm " onclick="banned(this)"  data-id="'.$r->id.'" alt="block" >
+                        <i class="fa fa-ban"></i>
+                      </button> ',
                  );
       }
-      $total_pengguna = $this->totalPenggunaModal($search, $valid_columns, $this->input->get("id", TRUE));
+      $total_pengguna = $this->totalPengguna($search, $valid_columns);
 
       $output = array(
           "draw" => $draw,
@@ -274,35 +161,295 @@ class Members extends CI_Controller {
       );
       echo json_encode($output);
       exit();
-    }
+  }
 
-    public function totalPenggunaModal($search, $valid_columns,$id)
-    {
-      $query = $this->db->select("COUNT(*) as num");
+  public function totalPengguna($search, $valid_columns)
+  {
+    $query = $this->db->select("COUNT(*) as num");
+    if(!empty($search))
+      {
+          $x=0;
+          foreach($valid_columns as $sterm)
+          {
+              if($x==0)
+              {
+                  $this->db->like($sterm,$search);
+              }
+              else
+              {
+                  $this->db->or_like($sterm,$search);
+              }
+              $x++;
+          }                 
+      }
+      $this->db->from("members");
+      $this->db->where("banned",0);
+      // $this->db->join('tb_group_role', 'tb_group_role.id = tb_user.id_role','left');
+      $query = $this->db->get();
+    	$result = $query->row();
+    	if(isset($result)) return $result->num;
+    	return 0;
+  }
+
+  public function dataTableBlacklist()
+  {
+      $draw = intval($this->input->get("draw"));
+      $start = intval($this->input->get("start"));
+      $length = intval($this->input->get("length"));
+      $order = $this->input->get("order");
+      $search= $this->input->get("search");
+      $search = $search['value'];
+      $col = 10;
+      $dir = "";
+
+      if(!empty($order))
+      {
+          foreach($order as $o)
+          {
+              $col = $o['column'];
+              $dir= $o['dir'];
+          }
+      }
+
+      if($dir != "asc" && $dir != "desc")
+      {
+          $dir = "desc";
+      }
+
+      $valid_columns = array(
+          0=>'id',
+          1=>'email',
+          2=>'nomor_wa',
+          3=>'nama_lengkap',
+          4=>'nama_facebook',
+          5=>'kecamatan',
+          6=>'kota',
+          7=>'reason',
+          8 =>'kode_member'
+      );
+      $valid_sort = array(
+          0=>'id',
+          1=>'email',
+          2=>'nomor_wa',
+          3=>'nama_lengkap',
+          4=>'nama_facebook',
+          5=>'kecamatan',
+          6=>'kota',
+          7=>'reason',
+          8 =>'kode_member'
+      );
+      if(!isset($valid_sort[$col]))
+      {
+          $order = null;
+      }
+      else
+      {
+          $order = $valid_sort[$col];
+      }
+      if($order !=null)
+      {
+          $this->db->order_by($order, $dir);
+      }
+      
       if(!empty($search))
-        {
-            $x=0;
-            foreach($valid_columns as $sterm)
-            {
-                if($x==0)
-                {
-                    $this->db->like($sterm,$search);
-                }
-                else
-                {
-                    $this->db->or_like($sterm,$search);
-                }
-                $x++;
-            }                 
-        }
-      $this->db->from("tb_user");
-      $this->db->where('id_atasan', NULL);
-     
+      {
+          $x=0;
+          foreach($valid_columns as $sterm)
+          {
+              if($x==0)
+              {
+                  $this->db->like($sterm,$search);
+              }
+              else
+              {
+                  $this->db->or_like($sterm,$search);
+              }
+              $x++;
+          }                 
+      }
+      $this->db->limit($length,$start);
+      $this->db->from("members");
+      $this->db->where("banned",1);
+      // $this->db->join('tb_group_role', 'tb_group_role.id = tb_user.id_role','left');
+      $pengguna = $this->db->get();
+      $data = array();
+      foreach($pengguna->result() as $r)
+      {
+
+          $data[] = array( 
+                      $r->id,
+                       $r->kode_member,
+                      // $r->email,
+                      $r->nomor_wa,
+                      $r->nama_lengkap,
+                      $r->nama_facebook,
+                      $r->kecamatan,
+                      $r->kota,
+                      $r->reason,
+                      '<button type="button" rel="tooltip" class="btn btn-danger btn-sm " onclick="hapusBlacklist(this)"  data-id="'.$r->id.'" >
+                        <i class="fa fa-trash"></i> Blacklist
+                      </button>',
+                 );
+      }
+      $total_pengguna = $this->totalPenggunaBlacklist($search, $valid_columns);
+
+      $output = array(
+          "draw" => $draw,
+          "recordsTotal" => $total_pengguna,
+          "recordsFiltered" => $total_pengguna,
+          "data" => $data
+      );
+      echo json_encode($output);
+      exit();
+  }
+
+  public function totalPenggunaBlacklist($search, $valid_columns)
+  {
+    $query = $this->db->select("COUNT(*) as num");
+    if(!empty($search))
+      {
+          $x=0;
+          foreach($valid_columns as $sterm)
+          {
+              if($x==0)
+              {
+                  $this->db->like($sterm,$search);
+              }
+              else
+              {
+                  $this->db->or_like($sterm,$search);
+              }
+              $x++;
+          }                 
+      }
+      $this->db->from("members");
+      $this->db->where("banned",1);
+      // $this->db->join('tb_group_role', 'tb_group_role.id = tb_user.id_role','left');
       $query = $this->db->get();
       $result = $query->row();
       if(isset($result)) return $result->num;
       return 0;
+  }
+
+  public function dataTableModal()
+  {
+    $draw = intval($this->input->get("draw"));
+    $start = intval($this->input->get("start"));
+    $length = intval($this->input->get("length"));
+    $order = $this->input->get("order");
+    $search= $this->input->get("search");
+    $search = $search['value'];
+    $col = 10;
+    $dir = "";
+
+    if(!empty($order))
+    {
+        foreach($order as $o)
+        {
+            $col = $o['column'];
+            $dir= $o['dir'];
+        }
     }
+
+    if($dir != "asc" && $dir != "desc")
+    {
+        $dir = "desc";
+    }
+      
+    $valid_columns = array(
+        0=>'nama_user',
+        1=>'email',
+        
+    );
+    $valid_sort = array(
+        0=>'nama_user',
+        1=>'email',
+    );
+    if(!isset($valid_sort[$col]))
+    {
+        $order = null;
+    }
+    else
+    {
+        $order = $valid_sort[$col];
+    }
+    if($order !=null)
+    {
+        $this->db->order_by($order, $dir);
+    }
+    
+    if(!empty($search))
+    {
+        $x=0;
+        foreach($valid_columns as $sterm)
+        {
+            if($x==0)
+            {
+                $this->db->like($sterm,$search);
+            }
+            else
+            {
+                $this->db->or_like($sterm,$search);
+            }
+            $x++;
+        }                 
+    }
+
+    $this->db->limit($length,$start);
+    $this->db->select("tb_user.*");
+    $this->db->from("tb_user");
+    $this->db->where('id_atasan', NULL);
+
+    $pengguna = $this->db->get();
+    $data = array();
+    foreach($pengguna->result() as $r)
+    {
+
+        $data[] = array( 
+                    '<input type="checkbox" name="selected_courses[]" value="'.$r->id_user.'">',
+                    $r->nama_user,
+                    $r->email,
+               );
+    }
+    $total_pengguna = $this->totalPenggunaModal($search, $valid_columns, $this->input->get("id", TRUE));
+
+    $output = array(
+        "draw" => $draw,
+        "recordsTotal" => $total_pengguna,
+        "recordsFiltered" => $total_pengguna,
+        "data" => $data
+    );
+    echo json_encode($output);
+    exit();
+  }
+
+  public function totalPenggunaModal($search, $valid_columns,$id)
+  {
+    $query = $this->db->select("COUNT(*) as num");
+    if(!empty($search))
+      {
+          $x=0;
+          foreach($valid_columns as $sterm)
+          {
+              if($x==0)
+              {
+                  $this->db->like($sterm,$search);
+              }
+              else
+              {
+                  $this->db->or_like($sterm,$search);
+              }
+              $x++;
+          }                 
+      }
+    $this->db->from("tb_user");
+    $this->db->where('id_atasan', NULL);
+   
+    $query = $this->db->get();
+    $result = $query->row();
+    if(isset($result)) return $result->num;
+    return 0;
+  }
 
   public function template()
   {
@@ -622,5 +769,132 @@ class Members extends CI_Controller {
                    
 
     echo "Peak memory:", (memory_get_peak_usage(true) / 1024 / 1024), " MB" ,"<br>";
+  }
+  public function edit(){
+      $id = $this->input->get('id');
+      $arr_par = array('id' => $id);
+      $data['parent'] = $this->admin->getmaster('members',$arr_par);
+      $this->output->set_content_type('application/json')->set_output(json_encode($data));
+  }
+
+  public function Save()
+  {       
+    
+      $response = [];
+      $response['error'] = TRUE; 
+      $response['msg']= "Gagal menyimpan.. Terjadi kesalahan pada sistem";
+      $recLogin = $this->session->userdata('user_id');
+
+      $kec_id = 0;
+      $cek_kec_id = $this->admin->get_array('tb_kecamatan',array( 'subdistrict_name' => $this->input->post('kecamatan',true)));
+      if(!empty($cek_kec_id)){
+          $kec_id = $cek_kec_id['subdistrict_id'];
+      }
+
+      $data = array(
+            'email'   => $this->input->post('email',true),
+            'nomor_wa'   => $this->input->post('nomor_wa',true),
+            'nama_lengkap'   => $this->input->post('nama_lengkap',true),
+            'nama_facebook'   => $this->input->post('nama_facebook',true),
+            'alamat'   => $this->input->post('alamat_lengkap',true),
+            'kelurahan'   => $this->input->post('kelurahan',true),
+            'kecamatan'   => $this->input->post('kecamatan',true),
+            'kota'   => $this->input->post('kota',true),
+            'provinsi'   => $this->input->post('provinsi',true),
+            'kec_id' => $kec_id
+        );
+ 
+      $this->db->trans_begin();
+
+      if($this->input->post('id') != "") {
+          $this->db->set($data);
+          $this->db->where('id', $this->input->post('id',TRUE));
+          $result  =  $this->db->update('members');  
+
+          if(!$result){
+                print("<pre>".print_r($this->db->error(),true)."</pre>");
+          }else{
+                $response['error']= FALSE;
+          }
+      }else{  
+
+          $result  = $this->db->insert('members', $data);
+            
+          if(!$result){
+                print("<pre>".print_r($this->db->error(),true)."</pre>");
+          }else{
+                $response['error']= FALSE;
+          }
+        }
+
+      $this->db->trans_complete();                      
+      $this->output->set_content_type('application/json')->set_output(json_encode($response));
+  }
+  public function Banned()
+  {       
+    
+      $response = [];
+      $response['error'] = TRUE; 
+      $response['msg']= "Gagal menyimpan.. Terjadi kesalahan pada sistem";
+
+      $data = array(
+            'banned'   => 1,
+            'reason'   => $this->input->post('alasan',true),
+        );
+ 
+      $this->db->trans_begin();
+
+      if($this->input->post('id_member') != "") {
+        $this->db->set($data);
+        $this->db->where('id', $this->input->post('id_member',TRUE));
+        $result  =  $this->db->update('members');  
+
+        if(!$result){
+              print("<pre>".print_r($this->db->error(),true)."</pre>");
+        }else{
+              $response['error']= FALSE;
+        }
+      }
+
+      $this->db->trans_complete();                      
+      $this->output->set_content_type('application/json')->set_output(json_encode($response));
+  }
+  public function deleteblacklist()
+  {       
+    
+      $response = [];
+      $response['error'] = TRUE; 
+      $response['msg']= "Gagal menyimpan.. Terjadi kesalahan pada sistem";
+
+      $data = array(
+            'banned'   => 0,
+            'reason'   => null,
+        );
+ 
+      $this->db->trans_begin();
+
+      $this->db->set($data);
+      $this->db->where('id', $this->input->get('id',TRUE));
+      $result  =  $this->db->update('members');  
+
+      if(!$result){
+            print("<pre>".print_r($this->db->error(),true)."</pre>");
+      }else{
+            $response['error']= FALSE;
+      }
+      
+
+      $this->db->trans_complete();                      
+      $this->output->set_content_type('application/json')->set_output(json_encode($response));
+  }
+  public function delete()
+  {
+    $response = [];
+    $response['error'] = TRUE; 
+    if($this->admin->deleteTable("id_user",$this->input->get('id',TRUE), 'members' )){
+      $response['error'] = FALSE;
+    } 
+
+    $this->output->set_content_type('application/json')->set_output(json_encode($response)); 
   }
 }
