@@ -226,6 +226,11 @@
                 display: block;
             }
         }
+        @media (min-width: 1480px){
+            .container {
+                /*max-width: 1480px;*/
+            }
+        }
     </style>
 </head>
 <body>

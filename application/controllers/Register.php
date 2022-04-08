@@ -67,7 +67,7 @@ class Register extends CI_Controller {
         $this->db->order_by('id','desc');
         $this->db->limit(1);
         $get_last = $this->db->get()->row_array();
-        $kode = 'A1';
+        $kode = 'QA1';
         if(!empty($get_last)){
             $urut = preg_replace('/[^0-9]/', '', $get_last['kode_member']);
             $prefix = preg_replace('/[^a-zA-Z]/', '',$get_last['kode_member']);
