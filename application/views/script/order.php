@@ -269,7 +269,7 @@
     }) 
 
     $(document).on('blur', "[id=dibayar]", function(){
-		if($("#dibayar").val() >= $("#total").val()){
+		if(  parseFloat($("#dibayar").val()) >= parseFloat( $("#total").val() ) ){
 			$("#status_bayar").val('Paid');
 		}else{
 			$("#status_bayar").val('Deposit');
