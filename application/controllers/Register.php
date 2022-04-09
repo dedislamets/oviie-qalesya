@@ -150,30 +150,41 @@ KOTA : ". $this->input->post('kota',true) ."
     }    
 
     $format_order = $postingan['format_order']; 
-    $arr_kode = explode(".", $this->input->get('kode',true));
+    $arr_kode = explode(" ", trim($this->input->get('kode',true)));
+
+    // print("<pre>".print_r($arr_kode,true)."</pre>");exit();
+    if(count($arr_kode) == 3 || count($arr_kode) == 4){
+        if(strtolower($arr_kode[0])== "bungkus"){
+
+        }else{
+            goto finish;
+        }
+    }else{
+        goto finish;
+    }
 
     if(empty($format_order)) goto finish;
-    $arr_format = explode(".", $format_order);
+    $arr_format = explode(" ", $format_order);
 
     $qty = 1;
-    if($arr_format[1] === "QTY"){
-        $qty = $arr_kode[1];
+    $idmember = "";
+    if($arr_format[2] === "QTY"){
+
+        if(is_numeric($arr_kode[2])){
+            $qty = $arr_kode[2];
+            $idmember = $arr_kode[3];
+        }else{
+            $idmember = $arr_kode[2];
+        }
     }
 
-    $idmember = "";
-    if($arr_format[1] === "IDMEMBER"){
-        $idmember = $arr_kode[1];
-    }else{
-        $idmember = $arr_kode[2];
-    }
 
     $kode = "ODR-" . date("ymd-his");
 
     $this->db->trans_begin();
-    $barang = $this->admin->get_array('barang',array( 'kode_barang' => strtoupper($arr_kode[0]) ));
+    $barang = $this->admin->get_array('barang',array( 'kode_barang' => strtoupper($arr_kode[1]) ));
     $member = $this->admin->get_array('members',array( 'kode_member' => $idmember));
     $exist = $this->admin->get_array('rekapan',array( 'kode_comment' => $this->input->get('kode',true), 'id_posting' => $this->input->get('id_posting',true)));
-    // print("<pre>".print_r($barang,true)."</pre>");exit();
 
     if(empty($exist) && !empty($barang) && !empty($member)){
 
@@ -183,7 +194,7 @@ KOTA : ". $this->input->post('kota',true) ."
             'kode_order'    => $kode,
             'id_member'     => $idmember,
             'qty'           => $qty,
-            'kode_product'  => strtolower($arr_kode[0]),
+            'kode_product'  => strtolower($arr_kode[1]),
             'pesan'         => $this->input->get('pesan',true),
             'id_posting'    => $this->input->get('id_posting',true),
             'kode_comment'  => $this->input->get('kode',true),
