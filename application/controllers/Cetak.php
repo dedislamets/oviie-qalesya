@@ -30,6 +30,7 @@ class Cetak extends CI_Controller {
 			$arr_sum = array();
 
 			if ($page == 'invoice'){	
+				$this->db->select("invoice.*,nama_lengkap,alamat,kelurahan,kecamatan,kota,provinsi,nomor_wa");
 				$this->db->from("invoice");
 	          	$this->db->join("tb_admin","tb_admin.nohp=invoice.hp_admin");
 		      	// $this->db->join("barang","barang.kode_barang=rekapan.kode_product");
