@@ -22,7 +22,10 @@
   <link href="<?= base_url(); ?>assets/css/paper-dashboard.min.css?v=2.1.1" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="<?= base_url(); ?>assets/demo/demo.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
   
   <!-- Extra details for Live View on GitHub Pages -->
   <!-- Google Tag Manager -->
@@ -37,14 +40,14 @@
        border-left: 0 !important;
     }
     h3{
-      font-family: 'Kalam', cursive;
+      font-family: 'Roboto', cursive;
     }
     .filter-option {
-      font-family: 'Kalam', cursive;
+      font-family: 'Roboto', cursive;
     }
     .input-group .form-control {
         padding: 10px;
-        font-family: 'Kalam', cursive;
+        font-family: 'Roboto', cursive;
         font-size: 18px;
     }
     .bootstrap-select>.dropdown-toggle.bs-placeholder, .bootstrap-select>.dropdown-toggle.bs-placeholder:active, .bootstrap-select>.dropdown-toggle.bs-placeholder:focus, .bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
