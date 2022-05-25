@@ -891,7 +891,7 @@ class Members extends CI_Controller {
   {
     $response = [];
     $response['error'] = TRUE; 
-    if($this->admin->deleteTable("id_user",$this->input->get('id',TRUE), 'members' )){
+    if($this->admin->deleteTable("id",$this->input->get('id',TRUE), 'members' )){
       $response['error'] = FALSE;
     } 
 
