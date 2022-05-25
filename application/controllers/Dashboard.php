@@ -37,9 +37,9 @@ class Dashboard extends CI_Controller {
 
             $this->db->from('invoice');
             $this->db->join('tb_admin U', 'U.nohp = invoice.hp_admin');
-            if($this->session->userdata('role') == 'Admin'){
-                $this->db->where('id_user',$this->session->userdata('user_id'));
-            }
+            // if($this->session->userdata('role') == 'Admin'){
+            //     $this->db->where('id_user',$this->session->userdata('user_id'));
+            // }
             $this->db->where_in('invoice.status',array('Cancel'));
             $data['cancel'] = $this->db->get()->num_rows();
 
@@ -47,9 +47,9 @@ class Dashboard extends CI_Controller {
             $this->db->from('invoice');
             $this->db->join('tb_admin U', 'U.nohp = invoice.hp_admin');
             $this->db->group_by('DATE(invoice.tgl_invoice)');
-            if($this->session->userdata('role') == 'Admin'){
-                $this->db->where('id_user',$this->session->userdata('user_id'));
-            }
+            // if($this->session->userdata('role') == 'Admin'){
+            //     $this->db->where('id_user',$this->session->userdata('user_id'));
+            // }
             $this->db->where_in('invoice.status',array('Paid','Delivery'));
             $records = $this->db->get()->result_array();
 
