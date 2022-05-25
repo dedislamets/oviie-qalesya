@@ -84,7 +84,7 @@
                   </div>
                 </div>
                 <div class="card-body ">
-                  <div class="input-group">
+                  <div class="input-group" style="display: none;">
                     <!-- <label style="padding: 10px;font-weight: 500;font-size: 16px;">Email *</label> -->
                     <div class="input-group-prepend">
                       <span class="input-group-text">
