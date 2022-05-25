@@ -20,9 +20,9 @@ class Dashboard extends CI_Controller {
             $this->db->select('sum(total+ongkir) omset');
             $this->db->from('invoice');
             $this->db->join('tb_admin U', 'U.nohp = invoice.hp_admin');
-            if($this->session->userdata('role') == 'Admin'){
-                $this->db->where('id_user',$this->session->userdata('user_id'));
-            }
+            // if($this->session->userdata('role') == 'Admin'){
+            //     $this->db->where('id_user',$this->session->userdata('user_id'));
+            // }
             $this->db->where_in('invoice.status',array('Paid','Delivery'));
             $query = $this->db->get();
             $data['omset'] = $query->row_array(); 
