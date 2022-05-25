@@ -49,7 +49,7 @@ class Comment extends CI_Controller {
 				        'id_posting'  => $response['id'],
 				        'content' => '',
 				        'full_picture' => $response['embed_html'],
-				        'format_order'  => 'KODE.QTY.IDMEMBER',
+				        'format_order'  => 'MAU KODE QTY IDMEMBER',
 				        'status'		=> 'Aktif'
 				        
 				    );
