@@ -154,7 +154,7 @@ KOTA : ". $this->input->post('kota',true) ."
 
     // print("<pre>".print_r($arr_kode,true)."</pre>");exit();
     if(count($arr_kode) == 3 || count($arr_kode) == 4){
-        if(strtolower($arr_kode[0])== "bungkus"){
+        if(strtolower($arr_kode[0])== "mau"){
 
         }else{
             goto finish;
