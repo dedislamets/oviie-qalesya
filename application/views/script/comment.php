@@ -68,6 +68,14 @@
           that.loadData();
         });
       },
+      createStr(item) {
+        item = item.replace("height=\"1280\"", "height=\"400\"");
+        item = item.replace("height=\"896\"", "height=\"400\"");
+        item = item.replace("height=\"1920\"", "height=\"400\"");
+        item = item.replace("width=\"720\"", "width=\"220\"");
+        item = item.replace("width=\"1080\"", "width=\"220\"");
+        return item;
+      },
       loadData: function(){
         var that = this;
         var article = { id: that.id };

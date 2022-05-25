@@ -33,7 +33,7 @@
                     <!-- <div v-if="list_posting.full_picture" class="mg-b-10">
                       <img :src="list_posting.full_picture" style="width: 200px" class="img-responsive">
                     </div> -->
-                    <div v-html="list_posting.embed_html"></div>
+                    <div v-html="createStr(list_posting.embed_html)"></div>
                   </div>
                 </div><!-- media -->
               </template>
