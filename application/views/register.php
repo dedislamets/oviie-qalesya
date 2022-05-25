@@ -184,7 +184,7 @@
                   </div> -->
 
                   <div class="input-group">
-                    <div style="display: block;width: 100%;font-family: 'Courgette', cursive;font-size: 23px;">Kelurahan</div>
+                    <div style="display: block;width: 100%;font-family: 'Roboto', cursive;font-size: 23px;">Kelurahan</div>
                     <div class="input-group-prepend">
                       <span class="input-group-text">
                       </span>
@@ -201,7 +201,7 @@
                     <?php echo form_error('kelurahan'); ?>
                   </div>
                   <div>
-                    <table style="width: 100%;font-family: 'Courgette', cursive;font-size: 20px;">
+                    <table style="width: 100%;font-family: 'Roboto', cursive;font-size: 20px;">
                       <tr>
                         <td width="100">Kecamatan</td><td width="10">:</td>
                         <td id="t-kecamatan"></td>
