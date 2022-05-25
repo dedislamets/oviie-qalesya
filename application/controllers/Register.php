@@ -125,7 +125,7 @@ class Register extends CI_Controller {
         Harap simpan kode member ini untuk bertransaksi di facebook setiap saat.<br><div style="font-size:15px;font-weight:600">**Anda bisa kembali ke Facebook untuk bertransaksi.</div>');
 
 
-        $msg = "*Selamat anda sudah terdaftar di Prastika Collection*
+        $msg = "*Selamat anda sudah terdaftar di Oviie Qalesya Boutique*
 ==================================================
 ID MEMBER : ". $kode ."
 EMAIL: ". $this->input->post('email',true) ."
@@ -135,7 +135,7 @@ KOTA : ". $this->input->post('kota',true) ."
 *Note : **Harap simpan kode member ini untuk bertransaksi di facebook setiap saat. Anda bisa kembali ke Facebook untuk bertransaksi.*";
         // $this->admin->simpan_wa($this->input->post('nomor_wa',true), $msg);
 
-        redirect('Register');
+        redirect('daftar');
     }
   
   public function Rekap()
