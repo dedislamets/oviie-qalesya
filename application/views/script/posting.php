@@ -28,6 +28,7 @@
     	createStr(item) {
     		item = item.replace("height=\"1280\"", "height=\"400\"");
     		item = item.replace("width=\"720\"", "width=\"220\"");
+        item = item.replace("width=\"1080\"", "width=\"220\"");
 	      return item;
 	    },
     }
