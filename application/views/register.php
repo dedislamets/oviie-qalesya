@@ -134,12 +134,12 @@
                     <textarea rows="2" name="alamat_lengkap" class="form-control" placeholder="Alamat Lengkap" required></textarea>
                     <?php echo form_error('alamat_lengkap'); ?>
                   </div>
-                  <!-- <div class="input-group">
+                  <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text">
                       </span>
                     </div>
-                    <select name="provinsi" id="provinsi" class="form-control selectpicker" data-live-search="true" required>
+                    <select name="provinsi" id="provinsi" class="form-control"  required>
                       <option value="">Pilih Provinsi</option>
                       <?php 
                       foreach($provinsi as $row)
@@ -181,15 +181,14 @@
                         ?>
                     </select>
                     <?php echo form_error('kecamatan'); ?>
-                  </div> -->
+                  </div>
 
                   <div class="input-group">
-                    <div style="display: block;width: 100%;font-family: 'Roboto', cursive;font-size: 23px;">Kelurahan</div>
                     <div class="input-group-prepend">
                       <span class="input-group-text">
                       </span>
                     </div>
-                    <select name="kelurahan" id="kelurahan" class="form-control selectpicker" data-live-search="true" required>
+                    <select name="kelurahan" id="kelurahan" class="form-control" required>
                       <option value="">Pilih Kelurahan</option>
                       <?php 
                       foreach($kelurahan as $row)
@@ -200,7 +199,7 @@
                     </select>
                     <?php echo form_error('kelurahan'); ?>
                   </div>
-                  <div>
+                  <!-- <div>
                     <table style="width: 100%;font-family: 'Roboto', cursive;font-size: 20px;">
                       <tr>
                         <td width="100">Kecamatan</td><td width="10">:</td>
@@ -213,13 +212,13 @@
                         <td width="100">Provinsi</td><td width="10">:</td><td id="t-prov"></td>
                       </tr>
                     </table>
-                  </div>
+                  </div> -->
                   
                 </div>
                 <div class="card-footer ">
-                  <input type="hidden" name="kecamatan" id="kecamatan" value="">
+                  <!-- <input type="hidden" name="kecamatan" id="kecamatan" value="">
                   <input type="hidden" name="kota" id="kota" value="">
-                  <input type="hidden" name="provinsi" id="provinsi" value="">
+                  <input type="hidden" name="provinsi" id="provinsi" value=""> -->
                 	<button type="submit" class="btn btn-warning btn-round btn-block mb-3">
 						        <!-- <i class="ace-icon fa fa-key"></i> -->
 						        <span class="bigger-110">Submit</span>
@@ -315,18 +314,18 @@
           getKelurahan($('#kecamatan').val(),'kelurahan');
       });
 
-      $("#kelurahan").change(function(e, params){  
-        $.get('<?= base_url()?>daftar/getAll', { kel: $(this).val()  }, function(data){ 
+      // $("#kelurahan").change(function(e, params){  
+      //   $.get('<?= base_url()?>daftar/getAll', { kel: $(this).val()  }, function(data){ 
 
-          $("#kecamatan").val(data.kecamatan.kecamatan);
-          $("#t-kecamatan").text(data.kecamatan.kecamatan);
-          $("#kota").val(data.kota.kota);
-          $("#t-kota").text(data.kota.kota);
-          $("#provinsi").val(data.provinsi.province);
-          $("#t-prov").text(data.provinsi.province);
+      //     $("#kecamatan").val(data.kecamatan.kecamatan);
+      //     $("#t-kecamatan").text(data.kecamatan.kecamatan);
+      //     $("#kota").val(data.kota.kota);
+      //     $("#t-kota").text(data.kota.kota);
+      //     $("#provinsi").val(data.provinsi.province);
+      //     $("#t-prov").text(data.provinsi.province);
 
-        });
-      })
+      //   });
+      // })
 
       function getKota(val,name){
         $.get('<?= base_url()?>daftar/getKota', { prov: val  }, function(data){ 
