@@ -298,14 +298,14 @@ class Barang extends CI_Controller {
 
       $spreadsheet = new Spreadsheet;
 
-      $styleArray = array(
-          'borders' => array(
-              'outline' => array(
-                  'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                  'color' => array('argb' => '000000'),
-              ),
-          ),
-      );
+      // $styleArray = array(
+      //     'borders' => array(
+      //         'outline' => array(
+      //             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+      //             'color' => array('argb' => '000000'),
+      //         ),
+      //     ),
+      // );
 
       $spreadsheet->setActiveSheetIndex(0)
         ->setCellValue('A1', 'Kode')
@@ -314,13 +314,13 @@ class Barang extends CI_Controller {
         ->setCellValue('D1', 'Berat')
         ->setCellValue('E1', 'Harga');
 
-      $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f4f403');
+      // $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f4f403');
 
       $spreadsheet->getActiveSheet()->setTitle('Barang');
 
-      foreach (range('A','E') as $col) {
-        $spreadsheet->getActiveSheet()->getColumnDimension($col)->setAutoSize(true);  
-      }
+      // foreach (range('A','E') as $col) {
+      //   $spreadsheet->getActiveSheet()->getColumnDimension($col)->setAutoSize(true);  
+      // }
 
      
       // exit();
