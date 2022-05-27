@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 require_once APPPATH.'/third_party/spout/Autoloader/autoload.php';
 use Box\Spout\Reader\ReaderFactory;
@@ -324,10 +324,10 @@ class Barang extends CI_Controller {
 
      
       // exit();
-      $writer = new Xlsx($spreadsheet);
+      $writer = new Xls($spreadsheet);
 
       header('Content-Type: application/vnd.ms-excel');
-      header('Content-Disposition: attachment;filename="Template Upload Barang.xlsx"');
+      header('Content-Disposition: attachment;filename="Template Upload Barang.xls"');
       header('Cache-Control: max-age=0');
 
       $writer->save('php://output');

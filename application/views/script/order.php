@@ -49,6 +49,28 @@
 	      	ganti(event){
 	    		this.loadRekap();
 	      	},
+	      	gantiBerat(event, berat, id_member, kurir) {
+
+	            const param = { berat: event.target.value, id_member: id_member, kurir: kurir };
+		        axios.post("<?= base_url()?>order/new_kurir", param)
+		        .then(response => {
+		        	if(response.data.error==false){
+		        		for (let val of app.list_rekap_modal) {
+		        			if(val.id_member == id_member){
+		        				val.ongkir = response.data.ongkir ;
+		        			}	
+		        		}
+		        	}else{
+		        		alert(response.data.msg);
+		        		for (let val of app.list_rekap_modal) {
+		        			if(val.id_member == id_member){
+		        				val.kurir = '' ;
+		        				val.ongkir = 0 ;
+		        			}
+		        		}
+		        	}
+		        });
+          	},
 	      	cari(event){
 	    		this.loadRekap();
 	      	},

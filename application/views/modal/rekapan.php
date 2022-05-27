@@ -36,7 +36,9 @@
                                             <td class="bold">Qty</td><td>:</td><td>{{log.qty}}</td>
                                         </tr>
                                         <tr>
-                                            <td class="bold">Berat</td><td>:</td><td>{{log.berat}}</td>
+                                            <td class="bold">Berat</td><td>:</td><td>
+                                                <input class="form-control" type="number" id="berat" name="berat" v-model="log.berat" @change="gantiBerat($event,log.berat, log.id_member, log.kurir)" />
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="bold">Kurir</td><td>:</td>
