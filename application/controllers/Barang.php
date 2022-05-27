@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require_once APPPATH.'/third_party/spout/Autoloader/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
-require_once APPPATH.'/third_party/spout/Autoloader/autoload.php';
 use Box\Spout\Reader\ReaderFactory;
 use Box\Spout\Common\Type;
 
